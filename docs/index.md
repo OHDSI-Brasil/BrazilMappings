@@ -1,14 +1,14 @@
-# Mapeamento SIGTAP para vocabulários padronizados do OMOP
+# Mapeamento Colaborativo do SIGTAP para vocabulários padronizados do OMOP CDM
 
 ## O Projeto
-Esse projeto está sendo desenvolvido pela comunidade brasileira para mapeamento dos termos da tabela SIGTAP do SUS para os vocabulários padronizados do OMOP
+Esse projeto está sendo desenvolvido pela comunidade brasileira para mapeamento dos termos da tabela SIGTAP do SUS para vocabulários padronizados do Modelo Comum de Dados (_CDM_) OMOP.
 
 ## Objetivos do Projeto
-- Ampliar o número de participantes na comunidade OHDSI Brasil/LATAM
+- Mapear os termos do SIGTAP para vocabulários padronizados
 - Educar a comunidade brasileira em relação as ferramentas disponíveis
-- Estimular o conhecimento OMOP para o público da SBIS
-- Mapear os termos do SIGTAP para os vocabulários padrões
 - Estabelecer governança para contribuições de forma descentralizada
+- Ampliar o número de participantes na comunidade OHDSI Brasil/LATAM
+- Estimular o conhecimento OMOP para o público da SBIS
 
 ## Métricas de Sucesso
 - Número de usuários ativos nos fóruns OHDSI em português. Meta: 15 usuários em 6 meses
@@ -20,4 +20,5 @@ Esse projeto está sendo desenvolvido pela comunidade brasileira para mapeamento
 - Resultados: tivemos 117 participantes inscritos
 
 ### Segunda Fase
-- Objetivos:
+- Objetivos: migração para a plataforma DoltHub
+
