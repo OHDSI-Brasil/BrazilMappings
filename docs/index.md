@@ -44,3 +44,37 @@ Siga estas etapas para participar do projeto Sigtap Omop. Clique no link de cada
 		○ Número (e %) de termos mapeados.  
 		○ Número (e %) de mapeamentos produzidos.  
 		○ Número (e %) de termos atualmente reservados por participantes.  
+
+## Entrar
+1. Acessar https://www.dolthub.com/.  
+2. Clicar em Sign in.	
+3. Clicar em Don't have an account yet? Create one.  
+4. Criar conta através de qualquer uma das formas disponíveis.  
+5. Uma vez logado, acessar https://www.dolthub.com/repositories/ohdsi-brasil/sigtap_omop.  
+6. Clicar em Fork. Confirmar.  
+
+## Instalar
+1. Baixar o UDZ.zip:  
+	○ Link (Usagi): https://1drv.ms/u/s!Auk_d44Mzjh_vIEAK_KOWDxtztXqdA?e=GpOjx8  
+	○ Baixar e descompactar, cada um pode demorar horas.   
+	
+2. Descompactar na pasta desejada. Essa pasta será o o diretório base. Ela contém:  
+	a. usagi/: Usagi pronto para ser usado (índices [vocabulários] pré-construídos).  
+	b. dolt/: Dolt e arquivos associados a ele.  
+	c. r/: R e script Zelador (zelador.R).  
+	d. zelador.bat: Script para executar em Windows.  
+	e. zelador.command: Script para executar em Mac.  
+	
+3. Ir no diretório base e executar o zelador.  
+	a. Windows: clicar no zelador.bat.  
+	b. Mac: clicar no zelador.command.  
+	
+4. Zelador perguntará se você quer inicializar o sistema Dolt. Confirmar.  
+	
+5. Zelador abrirá o navegador.  
+	a. Se o navegador ainda não está logado no DoltHub, será preciso fazer login.  
+	b. Após login, o site redirecionará automaticamente para a página de criar credenciais de acesso (access token). Inserir qualquer nome (não faz diferença) e salvar.  
+	
+6. Voltar para o Zelador. Ver que o programa detectou com sucesso a criação das credenciais.
+	
+7. Aguardar um ou dois minutos para o Zelador confirmar também a clonagem do repositório.
