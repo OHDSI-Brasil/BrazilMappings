@@ -78,3 +78,26 @@ Siga estas etapas para participar do projeto Sigtap Omop. Clique no link de cada
 6. Voltar para o Zelador. Ver que o programa detectou com sucesso a criação das credenciais.
 	
 7. Aguardar um ou dois minutos para o Zelador confirmar também a clonagem do repositório.
+
+## Baixar
+1. Ir no diretório base e executar o zelador.  
+	a. Windows: clicar no zelador.bat.  
+	b. Mac: clicar no zelador.command.  
+	
+2. Escolher opção pega_linhas. Zelador perguntará quantas linhas. Digitar número e apertar Enter.  
+	a. Limite: 10 a de 50 de cada vez.  
+		
+3. Zelador pedirá confirmação para abrir o navegador. Confirmar. O navegador abre na página https://www.dolthub.com/repositories/fabkury/sigtap_omop/pulls/new?refName=main.  
+	a. Caso não abra, entrar nesse link manualmente.  
+	
+4. Participante preenche manualmente:  
+	a. Base branch: main  
+	b. From branch: main  
+	c. Title: [N] linhas reservadas. Substituir [N] pelo número de linhas escolhidas no passo 2.  
+	d. Description: em branco ou à vontade do participante.  
+
+5. Clicar em "Create pull request" para executar a operação.  
+	a. Esta é a operação de reserva de linhas, que notifica o grupo que o participante decidiu iniciar trabalho nas linhas solicitadas.  
+	b. Se quiser pode fechar o navegador após concluir.  
+  
+Zelador criará diretório base/baixa/linhas_[id].csv, com as linhas para abrir no Usagi.
