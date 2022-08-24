@@ -23,7 +23,7 @@ Esse projeto está sendo desenvolvido pela comunidade brasileira para mapeamento
 - Objetivos: migração para a plataforma DoltHub
 
 # Roteiro do participante
-Siga estas etapas para participar do projeto Sigtap Omop. Clique no link de cada uma.
+Siga estas etapas para participar do mapeamento dos códigos do SIGTAP para os vocabulários do padrão OMOP Common Data Model.
 1. Criar conta no DoltHub e fazer o fork do repositório central. (Entrar)		
 2. Instalar os programas necessários através do pacote UDZ.zip. (Instalar)
 	
