@@ -1,7 +1,3 @@
----
-layout: jekyll-theme-cayman
----
-
 # Mapeamento Colaborativo do SIGTAP para vocabulários padronizados do OMOP CDM
 
 ## O Projeto
