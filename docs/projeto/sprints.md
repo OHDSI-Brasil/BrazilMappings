@@ -19,7 +19,7 @@ show_sidebar: false
     - Consideramos que tivemos um sucesso no número de inscritos, demonstrando o interesse da comunidade em projetos abertos.
     - Temos como desafio manter o engajamento da comunidade nas etapas seguintes do projeto e envolvimento na organização do projeto.
 - [Download da Apresentação da Reunião][1]
-- 
+
 [1]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint01.pdf
 
 ## Sprint 02
