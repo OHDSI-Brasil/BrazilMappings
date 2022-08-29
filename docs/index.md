@@ -1,4 +1,12 @@
-# Mapeamento Colaborativo do SIGTAP para vocabulários padronizados do OMOP CDM
+---
+layout: page
+title: SIGTAP-2-OMOP 
+subtitle: Mapeamento colaborativo do SIGTAP para vocabulários padronizados do OMOP CDM
+description: Esse é um projeto realizado abertamente pela comunidade brasileira para mapeamento e atualização dos termos da tabela SIGTAP para os vocabulários padronizados do OMOP CDM.
+show_sidebar: false
+---
+
+### Mapeamento Colaborativo do SIGTAP para vocabulários padronizados do OMOP CDM
 
 ## O Projeto
 Esse projeto está sendo desenvolvido pela comunidade brasileira para mapeamento dos termos da tabela SIGTAP do SUS para vocabulários padronizados do Modelo Comum de Dados (_CDM_) OMOP.
