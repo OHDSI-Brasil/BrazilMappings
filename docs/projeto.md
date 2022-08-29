@@ -4,7 +4,7 @@ title: O Projeto
 subtitle: SIGTAP-2-OMOP
 description: Detalhes do projeto de mapeamento do SIGTAP para OMOP CDM
 permalink: /projeto/
-menubar: menu
+menubar: menu_projeto
 show_sidebar: false
 ---
 
