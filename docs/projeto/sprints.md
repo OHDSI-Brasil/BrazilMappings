@@ -22,6 +22,8 @@ show_sidebar: false
 
 [1]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint01.pdf
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tbQ6TDkoFqA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Sprint 02
 - Período: 04/Jul/2022 - 15/Jul/2022
 - Objetivos:
@@ -42,6 +44,8 @@ show_sidebar: false
 
 [2]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint02.pdf
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fzcWT4LWGoA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Sprint 03
 - Período: 27/Jul/2022 - 24/Ago/2022
 - Objetivos:
@@ -56,6 +60,8 @@ show_sidebar: false
 - [Download da Apresentação da Reunião][3]
 
 [3]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint03.pdf
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dNaodyaZ18M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Sprint 04
 - Período: a definir início
