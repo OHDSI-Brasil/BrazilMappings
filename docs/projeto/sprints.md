@@ -18,7 +18,9 @@ show_sidebar: false
 - Análise:
     - Consideramos que tivemos um sucesso no número de inscritos, demonstrando o interesse da comunidade em projetos abertos.
     - Temos como desafio manter o engajamento da comunidade nas etapas seguintes do projeto e envolvimento na organização do projeto.
-- Download da Apresentação da Reunião[/projeto/sprint01.pdf]
+- [Download da Apresentação da Reunião][1]
+- 
+[1]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint01.pdf
 
 ## Sprint 02
 - Período: 04/Jul/2022 - 15/Jul/2022
@@ -36,7 +38,9 @@ show_sidebar: false
     - Necessidade de alinhar o processo de envio do .csv (todos enviarem no formato "File" → "Save")
     - Necessidade de aprimorar o processo de tradução de termos
     - Necessidade de alinhamento conceitual dos processos de equivalência
-- Download da Apresentação da Reunião[/projeto/sprint02.pdf]
+- [Download da Apresentação da Reunião][2]
+
+[2]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint02.pdf
 
 ## Sprint 03
 - Período: 27/Jul/2022 - 24/Ago/2022
@@ -49,7 +53,9 @@ show_sidebar: false
     - Participantes consideraram o mapeamento nessa rodada mais fácil, sendo compatível com o processo da curva de aprendizado.
 - Análise:
     - Necessidade de tornar a governança mais descentralizada, escalável e transparente. Ajustaremos nosso processo de upload, download, versionamento e agreement para ferramenta do script Zelador utilizando Dolthub e script em .R
-- Download da Apresentação da Reunião[/projeto/sprint03.pdf]
+- [Download da Apresentação da Reunião][3]
+
+[3]:https://ohdsi-brasil.github.io/SIGTAP2OMOP/projeto/sprint03.pdf
 
 ## Sprint 04
 - Período: a definir início
