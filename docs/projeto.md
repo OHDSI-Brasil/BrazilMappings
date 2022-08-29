@@ -3,6 +3,7 @@ layout: page
 title: O Projeto
 subtitle: SIGTAP-2-OMOP
 description: Detalhes do projeto de mapeamento do SIGTAP para OMOP CDM
+permalink: /projeto/
 show_sidebar: false
 ---
 
