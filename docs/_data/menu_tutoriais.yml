@@ -1,2 +1,7 @@
 - label: Menu
   items:
+    - name: Comunidade OHDSI
+      link: /tutoriais/ohdsi/
+    - name: Usagi
+      link: /tutoriais/usagi/
+ 
