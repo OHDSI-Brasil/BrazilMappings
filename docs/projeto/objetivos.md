@@ -9,11 +9,11 @@ show_sidebar: false
 ---
 
 ## Objetivos do Projeto
-- Mapear os termos do SIGTAP para vocabulários padronizados
-- Educar a comunidade brasileira em relação as ferramentas disponíveis
-- Estabelecer governança para contribuições de forma descentralizada
 - Ampliar o número de participantes na comunidade OHDSI Brasil/LATAM
+- Educar a comunidade brasileira em relação as ferramentas disponíveis
 - Estimular o conhecimento OMOP para o público da SBIS
+- Mapear os termos do SIGTAP para vocabulários padronizados do OMOP CDM
+- Estabelecer governança para contribuições de forma descentralizada
 
 ## Métricas de Sucesso
 - Número de usuários ativos nos fóruns OHDSI em português. Meta: 15 usuários em 6 meses
