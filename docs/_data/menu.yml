@@ -1,0 +1,6 @@
+- label: Menu
+  items:
+    - name: O Projeto
+      link: /projeto/
+    - name: Objetivos
+      link: /projeto/objetivos/
