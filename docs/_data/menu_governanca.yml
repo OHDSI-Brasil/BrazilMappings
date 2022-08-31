@@ -1,0 +1,8 @@
+- label: Menu
+  items:
+    - name: Governança
+      link: /governanca/
+    - name: Comunicação
+      link: /governanca/comunicacao/
+    - name: Método de Consenso
+      link: /projeto/consenso/
