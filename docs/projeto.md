@@ -10,3 +10,5 @@ show_sidebar: false
 
 ## O Projeto
 Esse projeto está sendo desenvolvido pela comunidade brasileira para mapeamento dos termos da tabela SIGTAP do SUS para vocabulários padronizados do Modelo Comum de Dados (_CDM_) OMOP.
+
+Os itens da tabela SIGTAP podem ser consultados no link [SIGTAP - Sistema de Gerenciamento da Tabela de Procedimentos, Medicamentos e OPM do SUS](http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp)
