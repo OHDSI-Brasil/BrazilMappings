@@ -64,7 +64,9 @@ show_sidebar: false
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dNaodyaZ18M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Sprint 04
-- Período: a definir início
+- Período: 05/Set - 
 - Objetivos:
     - Familiarizar os participantes com o script Zelador e ferramenta Dolthub
     - Mapear os 282 termos cirúrgicos que correspondem por 95% do repasse do SUS. São termos pertencentes ao Grupo "04 - Procedimentos Cirúrgicos" da SIGTAP e serão mapeados para domínio "Procedure" dos vocabulários padronizados do OMOP CDM
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T53MfwpP5Mg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
