@@ -10,6 +10,11 @@ show_sidebar: false
 
 ## Instalação
 
+<p style="text-align:center">
+	<a class="btn btn-primary" href="#" role="button">Download!</a>
+</p>
+
+
 1. [Baixe o pacote UDZ.zip][1]: esse pacote contém os scripts necessários para realizar o upload e download de novas linhas para mapeamento.
 2. Descompactar na pasta desejada (o descompactador nativo do Windows é muito lento para realizar essa operação (poderá demorar quase uma hora); programas como o [7-Zip][2] conseguem realizar essa operação em segundos).
 3. A pasta descompactada será o o diretório base. Ela contém:   
