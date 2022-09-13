@@ -477,7 +477,7 @@ baixa_linhas <- function() {
       commit_message <- paste0('Reserva de ', n_linhas_faltantes, ' linhas para ', username,
         ' (Zelador ', id_reserva, ').')
       
-      add_commit_push(commit_message, pull_request = TRUE)
+      add_commit_push(commit_message, pede_pull_request = TRUE)
     }
   }
 
@@ -584,7 +584,7 @@ sobe_linhas <- function() {
   
 
 # Atualiza o Dolt e gera o pull request ---------------------------------------------------------------------------
-  add_commit_push(paste0('Zelador sobe ', arq_selecionado, ' de ', username, '.'), pull_request = TRUE)
+  add_commit_push(paste0('Zelador sobe ', arq_selecionado, ' de ', username, '.'), pede_pull_request = TRUE)
 }
 
 
