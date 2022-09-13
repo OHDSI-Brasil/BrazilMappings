@@ -1,0 +1,8 @@
+- label: Menu
+  items:
+    - name: Script Zelador
+      link: /zelador/
+    - name: Cadastro Dolthub
+      link: /zelador/cadastro/
+    - name: Manual de Instruções
+      link: /zelador/manual/
