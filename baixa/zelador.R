@@ -7,7 +7,8 @@
 #' 
 if(interactive())
   setwd("~/R/sigtap omop/lançamento")
-
+if(F) {
+}
 
 # Controle --------------------------------------------------------------------------------------------------------
 faz_executa <- TRUE
