@@ -251,7 +251,7 @@ add_commit_push <- function(commit_message, pede_pull_request = FALSE) {
     dbExecute(dbd, "call dolt_push('--set-upstream', 'origin', 'main');")
   }, error = \(e) {
     console('Erro ao executar dolt push.')
-    continuar <- FALSE
+    continuar <<- FALSE
   })
   
   if(!continuar)
