@@ -246,7 +246,12 @@ add_commit_push <- function(commit_message, pede_pull_request = FALSE) {
   dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
   
   console('Executando dolt push.')
-  dbExecute(dbd, "call dolt_push('--set-upstream', 'origin', 'main');")
+  tryCatch({
+    dbExecute(dbd, "call dolt_push('--set-upstream', 'origin', 'main');")
+  }, error = \(e) {
+    console('Erro ao executar dolt push.')
+    return()
+  })
   
   ## Gerar o pull request.
   if(pede_pull_request) {
