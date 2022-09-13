@@ -239,14 +239,14 @@ pede_enter <- function() {
 }
 
 add_commit_push <- function(commit_message, pede_pull_request = FALSE) {
-  console('Executando dolt add.')
-  dbExecute(dbd, "call dolt_add('.');")
-  
-  console('Executando dolt commit.')
-  dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
-  
-  console('Executando dolt push.')
   tryCatch({
+    console('Executando dolt add.')
+    dbExecute(dbd, "call dolt_add('.');")
+    
+    console('Executando dolt commit.')
+    dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
+    
+    console('Executando dolt push.')
     dbExecute(dbd, "call dolt_push('--set-upstream', 'origin', 'main');")
   }, error = \(e) {
     console('Erro ao executar dolt push.')
