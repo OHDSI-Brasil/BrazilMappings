@@ -2,7 +2,7 @@
   items:
     - name: Script Zelador
       link: /zelador/
-    - name: Cadastro Dolthub
+    - name: Cadastro no DoltHub
       link: /zelador/cadastro/
     - name: Manual de Instruções
       link: /zelador/manual/
