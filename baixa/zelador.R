@@ -5,10 +5,6 @@
 #' Por Fabrício Kury, fab em kury.dev.
 #' Início: 2022-08-11 20:47-4.
 #' 
-if(interactive())
-  setwd("~/R/sigtap omop/lançamento")
-if(F) {
-}
 
 # Controle --------------------------------------------------------------------------------------------------------
 faz_executa <- TRUE
