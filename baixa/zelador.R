@@ -239,6 +239,7 @@ pede_enter <- function() {
 }
 
 add_commit_push <- function(commit_message, pede_pull_request = FALSE) {
+  continuar <- TRUE
   tryCatch({
     console('Executando dolt add.')
     dbExecute(dbd, "call dolt_add('.');")
@@ -250,8 +251,11 @@ add_commit_push <- function(commit_message, pede_pull_request = FALSE) {
     dbExecute(dbd, "call dolt_push('--set-upstream', 'origin', 'main');")
   }, error = \(e) {
     console('Erro ao executar dolt push.')
-    return()
+    continuar <- FALSE
   })
+  
+  if(!continuar)
+    return()
   
   ## Gerar o pull request.
   if(pede_pull_request) {
@@ -265,7 +269,7 @@ add_commit_push <- function(commit_message, pede_pull_request = FALSE) {
     
     console('Abrindo o navegador. Por favor preencha os campos e confirme o pull request.')
     
-    browseURL(url_pr)
+    browseURL(url_pull_request)
     
     Sys.sleep(4) # Apenas para minimizar a chance de que novo texto aparecerá na tela antes que o navegador abra.
   }
