@@ -11,7 +11,7 @@ show_sidebar: false
 ## Instalação
 
 <p style="text-align:center">
-	<a class="button is-success is-large is-fullwidth is-rounded" href="https://www.dropbox.com/s/xsi74obwjl52gpz/zelador_0913.zip?dl=0" role="button">Download!</a>
+	<a class="button is-success is-large is-fullwidth is-rounded" href="https://www.dropbox.com/s/xsi74obwjl52gpz/zelador_0913.zip?dl=1" role="button">Download!</a>
 </p>
 
 
