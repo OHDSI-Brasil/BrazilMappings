@@ -41,17 +41,6 @@ Siga estas etapas para participar do mapeamento dos códigos do SIGTAP para os v
 6. Clicar em Fork. Confirmar.  
 
 ## Instalar
-1. Baixar o UDZ.zip:  
-	○ Link (Usagi): https://1drv.ms/u/s!Auk_d44Mzjh_vIEAK_KOWDxtztXqdA?e=GpOjx8  
-	○ Baixar e descompactar, cada um pode demorar horas.   
-	
-2. Descompactar na pasta desejada. Essa pasta será o o diretório base. Ela contém:  
-	a. usagi/: Usagi pronto para ser usado (índices [vocabulários] pré-construídos).  
-	b. dolt/: Dolt e arquivos associados a ele.  
-	c. r/: R e script Zelador (zelador.R).  
-	d. zelador.bat: Script para executar em Windows.  
-	e. zelador.command: Script para executar em Mac.  
-	
 3. Ir no diretório base e executar o zelador.  
 	a. Windows: clicar no zelador.bat.  
 	b. Mac: clicar no zelador.command.  
