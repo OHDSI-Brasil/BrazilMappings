@@ -21,10 +21,10 @@ show_sidebar: false
 <img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/7-zip.png" alt="Processo de descompactação" class="center" style="height: 243px; width:956px;"/>
 
 3. A pasta descompactada será o o diretório base. Ela contém:   
-	a. dolt/: Dolt e arquivos associados a ele.  
+	a. dolt/: Dolt e arquivos associados a ele.
 	b. r/: atualiza.R
-  	c. R-Portable/: versão portátil do R e arquivos associados
-  	d. config.txt: arquivo nativo de configuração de tabela e base
+	c. R-Portable/: versão portátil do R e arquivos associados
+	d. config.txt: arquivo nativo de configuração de tabela e base
 	e. zelador.bat: Script para executar em Windows.  
 
 <img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/arquivos.png" alt="Pasta descompactada" class="center" style="height: 155px; width:624px;"/>
