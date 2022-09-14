@@ -24,5 +24,5 @@ show_sidebar: false
   d. config.txt: arquivo nativo de configuração de tabela e base
 	e. zelador.bat: Script para executar em Windows.  
 
-[1]:https://www.dropbox.com/s/xsi74obwjl52gpz/zelador_0913.zip?dl=0
+[1]:https://www.dropbox.com/s/xsi74obwjl52gpz/zelador_0913.zip?dl=1
 [2]:https://www.7-zip.org/download.html
