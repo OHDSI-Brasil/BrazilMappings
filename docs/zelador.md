@@ -21,7 +21,6 @@ show_sidebar: false
 <img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/7-zip.png" alt="Processo de descompactação" class="center" style="height: 243px; width:956px;"/>
 
 3. A pasta descompactada será o o diretório base. Ela contém:
-    1. a.
     1. dolt/: Dolt e arquivos associados a ele.
     2. r/: atualiza.R
     3. R-Portable/: versão portátil do R e arquivos associados
