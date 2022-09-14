@@ -32,14 +32,6 @@ Siga estas etapas para participar do mapeamento dos códigos do SIGTAP para os v
 		○ Número (e %) de mapeamentos produzidos.  
 		○ Número (e %) de termos atualmente reservados por participantes.  
 
-## Entrar
-1. Acessar https://www.dolthub.com/.  
-2. Clicar em Sign in.	
-3. Clicar em Don't have an account yet? Create one.  
-4. Criar conta através de qualquer uma das formas disponíveis.  
-5. Uma vez logado, acessar https://www.dolthub.com/repositories/ohdsi-brasil/sigtap_omop.  
-6. Clicar em Fork. Confirmar.  
-
 ## Instalar
 3. Ir no diretório base e executar o zelador.  
 	a. Windows: clicar no zelador.bat.  
