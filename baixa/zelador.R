@@ -8,7 +8,7 @@
 
 # Controle --------------------------------------------------------------------------------------------------------
 faz_executa <- TRUE
-
+ 
 bibliotecas_global <- c('tidyverse', 'dbplyr', 'processx', 'ps', 'DBI', 'RMariaDB')
 dolt_dir <- suppressWarnings(normalizePath('./dolt'))
 dolt_exe <- paste0(dolt_dir, '/dolt.exe')
