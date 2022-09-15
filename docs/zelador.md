@@ -15,12 +15,12 @@ show_sidebar: false
 </p>
 
 
-1. [Baixe o pacote UDZ.zip][1]: esse pacote contém os scripts necessários para realizar o upload e download de novas linhas para mapeamento.
-2. Descompactar na pasta desejada (o descompactador nativo do Windows é muito lento para realizar essa operação (poderá demorar quase uma hora); programas como o [7-Zip][2] conseguem realizar essa operação em segundos).
+- [Baixe o pacote UDZ.zip][1]: esse pacote contém os scripts necessários para realizar o upload e download de novas linhas para mapeamento.
+- Descompactar na pasta desejada (o descompactador nativo do Windows é muito lento para realizar essa operação (poderá demorar quase uma hora); programas como o [7-Zip][2] conseguem realizar essa operação em segundos).
 
 <img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/7-zip.png" alt="Processo de descompactação" class="center" style="width:956px;"/>
 
-3. A pasta descompactada será o o diretório base. Ela contém:
+- A pasta descompactada será o o diretório base. Ela contém:
     1. dolt/: Dolt e arquivos associados a ele.
     2. r/: atualiza.R
     3. R-Portable/: versão portátil do R e arquivos associados
