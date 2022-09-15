@@ -8,7 +8,7 @@
 
 # Controle --------------------------------------------------------------------------------------------------------
 faz_executa <- TRUE
- 
+
 bibliotecas_global <- c('tidyverse', 'dbplyr', 'processx', 'ps', 'DBI', 'RMariaDB')
 dolt_dir <- suppressWarnings(normalizePath('./dolt'))
 dolt_exe <- paste0(dolt_dir, '/dolt.exe')
@@ -18,6 +18,8 @@ dir_linhas_sobe <- paste0(dir_linhas, '/upload')
 quórum_mínimo <- 3
 limite_distribuição <- 5
 usuário_admin <- 'sigtap_omop_admin'
+pegar_linhas_min <- 2
+pegar_linhas_max <- 50
 
 # Colunas a atualizar quando o participante sobe linhas.
 colunas_a_subir <- c("mappingStatus", "equivalence", "statusSetOn", "conceptId", "conceptName", "domainId",
@@ -388,13 +390,11 @@ baixa_linhas <- function() {
   
 # Pergunta ao usuário quantas linhas ele(a) quer. -----------------------------------------------------------------
   pegar_n_linhas <- -1
-  while(pegar_n_linhas < 10 || pegar_n_linhas > 50) {
-    if(n_linhas_aguardando > 0) {
-      console('Quantas linhas gostaria de baixar da ', nome_tabela, ', incluindo as ', n_linhas_aguardando,
-        ' anteriores? (10 - 50, 0 para cancelar)')
-    } else {
-      console('Quantas linhas gostaria de baixar da ', nome_tabela, '? (10 - 50, 0 para cancelar)')
-    }
+  while(pegar_n_linhas < pegar_linhas_min || pegar_n_linhas > pegar_linhas_max) {
+    console('Quantas linhas gostaria de baixar da ', nome_tabela, 
+      ifelse(n_linhas_aguardando > 0, paste0(', incluindo as ', n_linhas_aguardando, ' anteriores'), ''),
+      '? (', pegar_linhas_min, ' - ', pegar_linhas_max, ', 0 para cancelar)')
+
     pegar_n_linhas <- readLines(escolhe_stdin(), 1)
     fecha_stdin()
     tryCatch({
@@ -495,6 +495,7 @@ baixa_linhas <- function() {
   sai_linhas <- tabela_dolt |>
     filter(sourceCode %in% termos_selecionados
       && statusSetBy == usuário_admin) |>
+    filter(row_number() <= pegar_n_linhas) |>
     collect() |>
     mutate(
       statusSetBy = username,
