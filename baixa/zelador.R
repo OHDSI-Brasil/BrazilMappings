@@ -644,7 +644,8 @@ cria_vista_consenso <- function() {
 # Execução --------------------------------------------------------------------------------------------------------
 if(faz_executa) {
 # Prepara ---------------------------------------------------------------------------------------------------------
-  console('Sigtap Omop - Script Zelador\nPor Fabrício Kury - fab@kury.dev\nAgosto de 2.022\n')
+  console('Sigtap Omop, Script Zelador versão 1.1')
+  console('Por Fabrício Kury (fab@kury.dev) e Carlos Campos (cl@precisiondata.com.br), agosto de 2.022')
   if(!file.exists(dolt_exe))
     stop(paste0('Não foi possível encontrar o Dolt. Favor verificar a instalação.\n',
       'Arquivo não encontrado:\n', dolt_exe))
