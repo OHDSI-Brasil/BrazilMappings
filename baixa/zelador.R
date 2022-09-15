@@ -185,10 +185,11 @@ conecta_mariadb <- function() {
 }
 
 gera_id_reserva <- function() {
-  idr <- as.character(round(runif(1, 1, 10000000)))
-  if(nchar(idr) > 5)
-    idr <- substr(idr, 1, 5)
-  idr
+  # idr <- as.character(round(runif(1, 1, 10000000)))
+  # if(nchar(idr) > 5)
+  #   idr <- substr(idr, 1, 5)
+  # idr
+  format(Sys.time(), '%m-%d-%H-%M')
 }
 
 pede_comando <- function(comandos, mensagem, permite_zero = TRUE) {
