@@ -4,6 +4,7 @@ title: Quero Participar
 subtitle: SIGTAP-2-OMOP
 description: Detalhes de como participar do projeto de mapeamento do SIGTAP para OMOP CDM
 permalink: /participar/
+menubar: menu_participar
 show_sidebar: false
 ---
 
