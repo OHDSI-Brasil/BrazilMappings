@@ -45,6 +45,36 @@ Essa etapa **não** é necessária de realizar todas vezes que executar o script
 
 Se você realizou o fork previamente, você poderá ignorar essa etapa nos próximos acessos.
 
+### Baixando linhas para mapear
+Digite a opção 3 e aperte ENTER para iniciar o processo de baixar linhas
+
+O script te perguntará quantas linhas deseja mapear, podendo selecionar entre 2-50 linhas.
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_baixar.png" alt="Fork" class="center" style="width:782px;"/>
+
+Após selecionar o número de linha que deseja mapear, o script solicitará que você faça o Pull Request na página do DoltHub. Clique ENTER e abrirá a página do DoltHub
+
+- Selecione 'main' no "Base branch" e 'main' no "From branch"
+- Defina um título explicando o que você está fazendo
+- Clique em "Create Pull Request"
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull.png" alt="Fork" class="center" style="width:870px;"/>
+
+Após clicar em "Create Pull Request", você cairá nessa tela.
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull_feito.png" alt="Fork" class="center" style="width:1183px;"/>
+
+Não se preocupe com a mensagem "Not authorize to merge". O processo ocorreu adequadamente. Somente os usuários admin fazem o merge, em uma rotina de verificação diária.
+
+Ao retornar para tela do 'zelador.bat', você verificará uma mensagem informando que o arquivo com o número de linhas solicitados foi criado no diretório "\linhas\nome_do_arquivo". O nome do arquivo seguirá o padrão tb_procedimento_MM_DD_hh_mm.csv
+
+- MM: mês
+- DD: dia
+- hh: hora
+- mm: minuto
+
+Dessa forma, você conseguirá localizar mais facilmente seus arquivos gerados em diferentes ocasiões.
+
 
 
 # Roteiro do participante
