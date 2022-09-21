@@ -75,6 +75,15 @@ Ao retornar para tela do 'zelador.bat', você verificará uma mensagem informand
 
 Dessa forma, você conseguirá localizar mais facilmente seus arquivos gerados em diferentes ocasiões.
 
+### Mapeando os termos
+
+Anteriormente orientávamos os participantes a importar os códigos para o Usagi.
+
+A partir de agora, para seguir o mapeamento, seguiremos o caminho de "File" → "Open"
+
+Realize o mapeamento conforme previamente orientado, seguindo as regras de domínios e classes preferenciais apresentadas na aba "Governança" dessa página.
+
+Após finalizar o mapeamento, salve o arquivo por meio do caminho "File" → "Save" para podermos, posterirmente, seguir com a etapa de envio de linhas.
 
 
 # Roteiro do participante
