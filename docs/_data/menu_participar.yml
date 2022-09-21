@@ -1,0 +1,10 @@
+- label: Menu
+  items:
+    - name: Participar do Projeto
+      link: /participar/
+    - name: Contribuir com a Página
+      link: /participar/pagina/
+    - name: Contribuir com Script Zelador
+      link: /participar/zelador/
+    - name: Participantes 3º Trimestre 2022
+      link: /governanca/participantes_3tri/
