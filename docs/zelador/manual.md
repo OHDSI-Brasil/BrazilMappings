@@ -99,7 +99,7 @@ O script apresentará os arquivos presentes na pasta upload e perguntará qual a
 
 Selecione o arquivo de interesse pelo número e aperte ENTER
 
-Caso o script apresente mensagem de "Erro ao executar o dolt push", digite a opção e aperte ENTER
+Caso o script apresente mensagem de "Erro ao executar o dolt push", digite a opção 4 e aperte ENTER
 
 <img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_push.png" alt="" class="center" style="width:774px;"/>
 
