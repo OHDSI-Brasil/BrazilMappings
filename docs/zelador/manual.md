@@ -50,7 +50,9 @@ Digite a opção 3 e aperte ENTER para iniciar o processo de baixar linhas
 
 O script te perguntará quantas linhas deseja mapear, podendo selecionar entre 2-50 linhas.
 
-<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_baixar.png" alt="Fork" class="center" style="width:782px;"/>
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_baixar.png" alt="" class="center" style="width:782px;"/>
+
+Se você tiver baixado linhas previamente, mas elas ainda não foram enviadas, o Script selecionará as mesmas linhas para mapeamento.
 
 Após selecionar o número de linha que deseja mapear, o script solicitará que você faça o Pull Request na página do DoltHub. Clique ENTER e abrirá a página do DoltHub
 
@@ -58,11 +60,11 @@ Após selecionar o número de linha que deseja mapear, o script solicitará que 
 - Defina um título explicando o que você está fazendo
 - Clique em "Create Pull Request"
 
-<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull.png" alt="Fork" class="center" style="width:870px;"/>
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull.png" alt="" class="center" style="width:870px;"/>
 
 Após clicar em "Create Pull Request", você cairá nessa tela.
 
-<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull_feito.png" alt="Fork" class="center" style="width:1183px;"/>
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull_feito.png" alt="" class="center" style="width:1183px;"/>
 
 Não se preocupe com a mensagem "Not authorize to merge". O processo ocorreu adequadamente. Somente os usuários admin fazem o merge, em uma rotina de verificação diária.
 
@@ -85,83 +87,28 @@ Realize o mapeamento conforme previamente orientado, seguindo as regras de domí
 
 Após finalizar o mapeamento, salve o arquivo por meio do caminho "File" → "Save" para podermos, posterirmente, seguir com a etapa de envio de linhas.
 
+### Subindo linhas mapeadas
 
-# Roteiro do participante
-Siga estas etapas para participar do mapeamento dos códigos do SIGTAP para os vocabulários do padrão OMOP Common Data Model.
-1. Criar conta no DoltHub e fazer o fork do repositório central. (Entrar)		
-2. Instalar os programas necessários através do pacote UDZ.zip. (Instalar)
-	
-3. Baixar termos para mapear no Usagi. (Baixar)  
-		a. Fornece novos termos dentro do limite pré-estabelecido de termos por participante em cada vez.  
-		b. Se tentar baixar de novo, após já ter baixado antes, o sistema simplesmente fornece novamente os mesmos termos da última vez.  
-		c. Libera novos termos para mapear após receber os mapeamentos dos termos baixados anteriormente.  
-	
-4. Mapear termos com o Usagi, e salvar (não exportar) o arquivo CSV. (Mapear)
-	
-5. Fazer upload do arquivo CSV para o DoltHub. (Subir)
-	
-6. Visualizar ou baixar os mapeamentos acordados até o presente momento. (Ver)
-	
-7. Escrever comentários, abrir um problema (issue), ou iniciar alguma discussão. (Comentar)
-	
-8. Obter estatísticas simples atualizadas em tempo real. (Estatísticas)  
-		○ Número (e %) de termos mapeados.  
-		○ Número (e %) de mapeamentos produzidos.  
-		○ Número (e %) de termos atualmente reservados por participantes.  
+Após realizar o mapeamento no Usagi, mova seu arquivo .csv para a pasta "/linhas/upload/"
 
+No Script Zelador, digite a opção 5 e aperte ENTER para iniciar o processo de subir linhas
 
+O script apresentará os arquivos presentes na pasta upload e perguntará qual arquivo que deseja subir.
 
-## Baixar
-1. Ir no diretório base e executar o zelador.  
-	a. Windows: clicar no zelador.bat.  
-	b. Mac: clicar no zelador.command.  
-	
-2. Escolher opção pega_linhas. Zelador perguntará quantas linhas. Digitar número e apertar Enter.  
-	a. Limite: 10 a de 50 de cada vez.  
-		
-3. Zelador pedirá confirmação para abrir o navegador. Confirmar. O navegador abre na página https://www.dolthub.com/repositories/fabkury/sigtap_omop/pulls/new?refName=main.  
-	a. Caso não abra, entrar nesse link manualmente.  
-	
-4. Participante preenche manualmente:  
-	a. Base branch: main  
-	b. From branch: main  
-	c. Title: [N] linhas reservadas. Substituir [N] pelo número de linhas escolhidas no passo 2.  
-	d. Description: em branco ou à vontade do participante.  
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_subir.png" alt="" class="center" style="width:536px;"/>
 
-5. Clicar em "Create pull request" para executar a operação.  
-	a. Esta é a operação de reserva de linhas, que notifica o grupo que o participante decidiu iniciar trabalho nas linhas solicitadas.  
-	b. Se quiser pode fechar o navegador após concluir.  
-  
-Zelador criará diretório base/baixa/linhas_[id].csv, com as linhas para abrir no Usagi.
+Selecione o arquivo de interesse pelo número e aperte ENTER
 
-## Mapear
-1. Abrir o Usagi (arquivo JAR na pasta ./Usagi/).  
-	
-2. Abrir (não importar) o arquivo linhas_[id].csv no Usagi.  
-	
-3. Fazer o mapeamento.  
-	
-4. Salvar.  
-		
-5. Repetir quantas vezes quiser.  
+Caso o script apresente mensagem de "Erro ao executar o dolt push", digite a opção e aperte ENTER
 
-## Subir
-1. Ir no diretório base e executar o zelador  
-	a. Windows: clicar no zelador.bat.  
-	b. Mac: clicar no zelador.command.  
-	
-2. Escolher a opção sobe_linhas.  
-	a. O programa listará os arquivos Usagi detectados.  
-	b. Escolher o arquivo linhas_[id].csv que foi usado.  
-	
-3. Zelador faz o upload das linhas para o DoltHub.  
-	
-4. Zelador perguntará se pode abrir o navegador. Confirmar.  
-	
-5. O navegador abre na página https://www.dolthub.com/repositories/fabkury/sigtap_omop/pulls/new?refName=main. O participante preenche:  
-	a. Base branch: main  
-	b. From branch: main  
-	c. Title: à vontade do participante.  
-	d. Description: em branco ou à vontade do participante.  
-	
-6. Clicar Create pull request para executar a operação.
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_push.png" alt="" class="center" style="width:774px;"/>
+
+Após executar o dolt push, o Script Zelador solicitará que você faça um Pull Request dos termos mapeados.
+
+O Pull Request deve ser feito da mesma forma apresentada na etapa de baixar linhas.
+
+Em alguma situações, caso você tenha feito o mapeamento muito rapidamente, o seu Pull Request anterior pode ainda não ter sido aprovado para merge e surgirá uma mensagem de erro:
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_pull_erro.png" alt="" class="center" style="width:877px;"/>
+
+Não se preocupe, o commit de seu mapeamento foi registrado. Assim que o Pull Request anterior for aprovado, as modificações solicitadas posteriormente também serão atualizadas.
