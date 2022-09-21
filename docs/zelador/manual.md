@@ -9,6 +9,44 @@ show_sidebar: false
 ---
 
 ## Manual de Instruções
+
+### Acessando o Zelador
+Após descompactar os arquivos do pacote UDZ, você terá acesso ao arquivo 'zelador.bat' que executará o Script em .R
+
+O Script verificará se foi lançada alguma versão mais atualizada. Se sim, será feita atualização para a versão mais recente.
+
+Sua tela inicial de acesso:
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_tela_inicial.png" alt="Tela inicial do zelador" class="center" style="width:977px;"/>
+
+### Fazendo Login no DoltHub
+Digite a opção 1 e aperte ENTER para iniciar o processo de login no DoltHub
+
+O script te direcionará para página do DoltHub. Faça o login em sua conta
+
+Em seguida, você será solicitado para criar uma credencial. Defina um nome qualquer para sua credencial e clique em "Create"
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_credencial.png" alt="Credencial" class="center" style="width:1166px;"/>
+
+Essa etapa **não** é necessária de realizar todas vezes que executar o script zelador.
+
+Se sua credencial permanece válida, você poderá ignorar essa etapa nos próximos acessos.
+
+### Realizando o Fork
+Digite a opção 2 e aperte ENTER para iniciar o processo de realização do Fork, caso não tenha ainda sido feito.
+
+O script te direcionará para página do DoltHub. Clique em Fork
+
+<img src="https://ohdsi-brasil.github.io/SIGTAP2OMOP/img/zelador_fork.png" alt="Fork" class="center" style="width:1172px;"/>
+
+Realize o Fork do SIGTAP2OMOP para você conseguir fazer as etapas de baixar e enviar linhas mapeadas.
+
+Essa etapa **não** é necessária de realizar todas vezes que executar o script zelador.
+
+Se você realizou o fork previamente, você poderá ignorar essa etapa nos próximos acessos.
+
+
+
 # Roteiro do participante
 Siga estas etapas para participar do mapeamento dos códigos do SIGTAP para os vocabulários do padrão OMOP Common Data Model.
 1. Criar conta no DoltHub e fazer o fork do repositório central. (Entrar)		
@@ -32,20 +70,7 @@ Siga estas etapas para participar do mapeamento dos códigos do SIGTAP para os v
 		○ Número (e %) de mapeamentos produzidos.  
 		○ Número (e %) de termos atualmente reservados por participantes.  
 
-## Instalar
-3. Ir no diretório base e executar o zelador.  
-	a. Windows: clicar no zelador.bat.  
-	b. Mac: clicar no zelador.command.  
-	
-4. Zelador perguntará se você quer inicializar o sistema Dolt. Confirmar.  
-	
-5. Zelador abrirá o navegador.  
-	a. Se o navegador ainda não está logado no DoltHub, será preciso fazer login.  
-	b. Após login, o site redirecionará automaticamente para a página de criar credenciais de acesso (access token). Inserir qualquer nome (não faz diferença) e salvar.  
-	
-6. Voltar para o Zelador. Ver que o programa detectou com sucesso a criação das credenciais.
-	
-7. Aguardar um ou dois minutos para o Zelador confirmar também a clonagem do repositório.
+
 
 ## Baixar
 1. Ir no diretório base e executar o zelador.  
