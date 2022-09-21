@@ -68,6 +68,8 @@ Usuários que tiveram pelo menos um commit no 3º Trimestre de 2022:
 
 <img src="https://media-exp1.licdn.com/dms/image/C4D03AQGkxHeMh8nU7g/profile-displayphoto-shrink_400_400/0/1652404982513?e=1669248000&v=beta&t=r6dFUmf6UDxC4IiPAcfF6Qvc60x61SIYfiGNuGYumwI" alt="" class="center" style="width:80px;"/>[Carlos Augusto Lima de Campos](https://www.linkedin.com/in/carlosalcampos/)
 
+<img src="https://media-exp1.licdn.com/dms/image/C4D03AQF4ngbfnl_L1A/profile-displayphoto-shrink_400_400/0/1550671361476?e=1669248000&v=beta&t=aj5dOOnhxBmv3dBbds19jlfFj-4D9H8_oADcW6P28lQ" alt="" class="center" style="width:80px;"/>[Fabrício Kury](https://www.linkedin.com/in/fab-kury/)
+
 ## Participantes que contribuiram com o desenvolvimento do Script Zelador
 Usuários que tiveram pelo menos um commit no 3º Trimestre de 2022:
 
