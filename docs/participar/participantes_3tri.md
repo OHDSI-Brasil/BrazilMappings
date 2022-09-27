@@ -37,7 +37,7 @@ Usuários que mapearam pelo menos 20 termos no 3º Trimestre de 2022:
 
 <img src="https://media-exp1.licdn.com/dms/image/C4E03AQG00wRAxhk1gg/profile-displayphoto-shrink_400_400/0/1626392158156?e=1669248000&v=beta&t=LjKFQn88JIioK9VhnDM9NJWk6iFunTwFLSrlO3z2LYo" alt="" class="center" style="width:80px;"/>[João Gabriel Zanetti Carvalho](https://www.linkedin.com/in/joaogabrielzanetti/)
 
-<!--- OCULTO <img src="https://media-exp1.licdn.com/dms/image/C4E03AQGmeiIetmj1_g/profile-displayphoto-shrink_400_400/0/1550261765413?e=1669248000&v=beta&t=A1fv-oVj_3DnMtL7LXQS0jccmcoPnO1Q_mCccgPL_vs" alt="" class="center" style="width:80px;"/>[Julio Cesar Barbour Oliveira](https://www.linkedin.com/in/julio-cesar-barbour-oliveira-357188180/) -->
+<img src="https://media-exp1.licdn.com/dms/image/C4E03AQGmeiIetmj1_g/profile-displayphoto-shrink_400_400/0/1550261765413?e=1669248000&v=beta&t=A1fv-oVj_3DnMtL7LXQS0jccmcoPnO1Q_mCccgPL_vs" alt="" class="center" style="width:80px;"/>[Julio Cesar Barbour Oliveira](https://www.linkedin.com/in/julio-cesar-barbour-oliveira-357188180/)
 
 <img src="https://media-exp1.licdn.com/dms/image/C4D03AQF-Ifx7j6nlEA/profile-displayphoto-shrink_400_400/0/1657664344729?e=1669248000&v=beta&t=M_PYLkEao57gdIgXpawqn8XW6W-d9y4qOj09i5GMIRE" alt="" class="center" style="width:80px;"/>[Larissa Borges Moraes](https://www.linkedin.com/in/larissa-borges-moraes/)
 
