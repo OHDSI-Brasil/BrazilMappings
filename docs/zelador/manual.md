@@ -10,4 +10,4 @@ show_sidebar: false
 
 ## Manual de Instruções
 
-Para visualizar/baixar o material acesse https://github.com/SIGTAP2OMOP/blob/master/docs/passo_passo_baixar_subir_linhas_zelador.pdf
+Para visualizar/baixar o material acesse [Link para baixar o passo a passo](https://github.com/OHDSI-Brasil/SIGTAP2OMOP/blob/master/docs/passo_passo_baixar_subir_linhas_zelador.pdf)
