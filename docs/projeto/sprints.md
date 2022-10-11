@@ -2,7 +2,7 @@
 layout: page
 title: O Projeto
 subtitle: SIGTAP-2-OMOP
-description: Detalhes do projeto de mapeamento do SIGTAP para OMOP CDM
+description: Detalhes do projeto de mapeamento da "Tabela de Procedimentos, Medicamentos e OPM dos SUS (SIGTAP)" para OMOP CDM
 permalink: /projeto/sprints/
 menubar: menu_projeto
 show_sidebar: false
@@ -28,7 +28,7 @@ show_sidebar: false
 - Período: 04/Jul/2022 - 15/Jul/2022
 - Objetivos:
     - Familiarizar os participantes com a ferramenta Usagi
-    - Mapear 356 itens do Grupo "06 - Medicamentos" da tabela SIGTAP para o domínio Drug do OMOP-CDM
+    - Mapear 356 itens do Grupo "06 - Medicamentos" da "Tabela de Procedimentos, Medicamentos e OPM dos SUS (SIGTAP)" para o domínio Drug do OMOP-CDM
 - Resultados:
     - 120 participantes receberam termos para mapear. Tivemos retorno de 21 participantes
     - Desse total, 18 enviaram arquivo em formato correto ("File" → "Save"). 3 participantes enviaram arquivo em formato que não pode ser aproveitado ("Export for review").
@@ -67,6 +67,6 @@ show_sidebar: false
 - Período: 05/Set - 
 - Objetivos:
     - Familiarizar os participantes com o script Zelador e ferramenta Dolthub
-    - Mapear os 282 termos cirúrgicos que correspondem por 95% do repasse do SUS. São termos pertencentes ao Grupo "04 - Procedimentos Cirúrgicos" da SIGTAP e serão mapeados para domínio "Procedure" dos vocabulários padronizados do OMOP CDM
+    - Mapear os 282 termos cirúrgicos que correspondem por 95% do repasse do SUS. São termos pertencentes ao Grupo "04 - Procedimentos Cirúrgicos" da "Tabela de Procedimentos, Medicamentos e OPM dos SUS (SIGTAP)" e serão mapeados para domínio "Procedure" dos vocabulários padronizados do OMOP CDM
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/T53MfwpP5Mg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
