@@ -2,7 +2,7 @@
 layout: page
 title: O Projeto
 subtitle: SIGTAP-2-OMOP
-description: Detalhes do projeto de mapeamento da "Tabela de Procedimentos, Medicamentos e OPM dos SUS (SIGTAP)" para OMOP CDM
+description: Detalhes do projeto de mapeamento da "Tabela de Procedimentos, Medicamentos e OPM dos SUS - (SIGTAP)" para OMOP CDM
 permalink: /projeto/sprints/
 menubar: menu_projeto
 show_sidebar: false
@@ -28,7 +28,7 @@ show_sidebar: false
 - Período: 04/Jul/2022 - 15/Jul/2022
 - Objetivos:
     - Familiarizar os participantes com a ferramenta Usagi
-    - Mapear 356 itens do Grupo "06 - Medicamentos" da "Tabela de Procedimentos, Medicamentos e OPM dos SUS (SIGTAP)" para o domínio Drug do OMOP-CDM
+    - Mapear 356 itens do Grupo "06 - Medicamentos" da "Tabela de Procedimentos, Medicamentos e OPM dos SUS - (SIGTAP)" para o domínio Drug do OMOP-CDM
 - Resultados:
     - 120 participantes receberam termos para mapear. Tivemos retorno de 21 participantes
     - Desse total, 18 enviaram arquivo em formato correto ("File" → "Save"). 3 participantes enviaram arquivo em formato que não pode ser aproveitado ("Export for review").
