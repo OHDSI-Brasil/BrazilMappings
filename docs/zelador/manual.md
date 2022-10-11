@@ -2,7 +2,7 @@
 layout: page
 title: Script Zelador
 subtitle: Manual de Instruções
-description: Informações sobre a configuração e uso do script zelador para mapeamento do SIGTAP para OMOP
+description: Informações sobre a configuração e uso do script zelador para mapeamento da "Tabela de Procedimentos, Medicamentos e OPM dos SUS - (SIGTAP)" para OMOP
 permalink: /zelador/manual/
 menubar: menu_zelador
 show_sidebar: false
