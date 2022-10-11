@@ -2,7 +2,7 @@
 layout: page
 title: Governança do Projeto
 subtitle: Como o projeto está organizado
-description: Detalhamento da governança do projeto de mapeamento do SIGTAP para OMOP
+description: Detalhamento da governança do projeto de mapeamento da "Tabela de Procedimentos, Medicamentos e OPM dos SUS - (SIGTAP)" para OMOP
 permalink: /governanca/comunicacao/
 menubar: menu_governanca
 show_sidebar: false
@@ -16,7 +16,7 @@ O grupo tem adotado as seguintes regras/canais para comunicação:
 ### Fórum OHDSI
 O [Fórum OHDSI](https://forums.ohdsi.org/) é utilizado para dúvidas gerais que podem ser relevantes para comunidade OHDSI (dúvidas de mapeamento ou erros no Usagi, por exemplo).
 
-Temos utilizado o [Fórum OHDSI em Português](https://forums.ohdsi.org/c/ohdsi-em-portugues/26) para postar as principais dúvidas de mapeamento da tabela SIGTAP.
+Temos utilizado o [Fórum OHDSI em Português](https://forums.ohdsi.org/c/ohdsi-em-portugues/26) para postar as principais dúvidas de mapeamento da "Tabela de Procedimentos, Medicamentos e OPM dos SUS - (SIGTAP)".
 
 ### WhatsApp
 Temos um grupo de WhatsApp dedicado para resolução de dúvidas específicas do projeto que podem não ser relevantes para a comunidade OHDSI de forma geral (datas de reuniões, por exemplo).
