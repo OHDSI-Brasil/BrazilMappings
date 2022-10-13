@@ -68,5 +68,14 @@ show_sidebar: false
 - Objetivos:
     - Familiarizar os participantes com o script Zelador e ferramenta Dolthub
     - Mapear os 282 termos cirúrgicos que correspondem por 95% do repasse do SUS. São termos pertencentes ao Grupo "04 - Procedimentos Cirúrgicos" da "Tabela de Procedimentos, Medicamentos e OPM dos SUS (SIGTAP)" e serão mapeados para domínio "Procedure" dos vocabulários padronizados do OMOP CDM
+- Resultados:
+    - 181 linhas mapeadas no período
+    - 8 participantes mapearam linhas
+    - 2 participantes reservaram linhas mas não mapearam
+- Análise:
+    - Redução na participação do grupo devido a incorporação de um novo processo
+    - Orientação em relação as dúvidas relativas ao script Zelador
+    - Atualmente utilizamos como default para mapeamento o termo com maior similaridade no Usagi. Passaremos a utilizar o termo mapeado em 2018 (caso existente) pois entendemos que boa parte dos termos de 2018 já apresentam bom mapeamento e que o processo atual já permite que seja feito essa mudança sendo possível atribuir o consenso ao grupo e não como decisões individuais.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/T53MfwpP5Mg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rFi0wYoiSW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
