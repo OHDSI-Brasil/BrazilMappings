@@ -598,6 +598,23 @@ sobe_linhas <- function() {
 }
 
 
+# Resetar tabela local --------------------------------------------------------------------------------------------
+resetar_tabela_local <- function() {
+  # Executa o Dolt em processo separado.
+  abre_dolt_sql()
+  
+  # Conecta ao Dolt via SQL.
+  conecta_mariadb()
+  
+  # Troca para o sigtap_omop.
+  dbExecute(dbd, paste0('use ', proj_repo, ';'))
+  
+  console('Executando dolt checkout.')
+  dbExecute(dbd, paste0('call dolt_checkout("', nome_tabela, '_dolt");'))
+  console('Dolt checkout concluído.')
+}
+
+
 # Execução --------------------------------------------------------------------------------------------------------
 if(faz_executa_zelador) {
 # Prepara ---------------------------------------------------------------------------------------------------------
@@ -633,7 +650,8 @@ if(faz_executa_zelador) {
         'Fazer fork',
         'Baixar linhas para mapear',
         'Criar pull request',
-        'Subir linhas mapeadas')
+        'Subir linhas mapeadas',
+        'Resolver problemas (resetar tabela local)')
     }
     
     comando <- pede_comando(comandos, 'Escolha a operação desejada:')
@@ -655,6 +673,9 @@ if(faz_executa_zelador) {
     
     if(comando == 'Subir linhas mapeadas')
       sobe_linhas()
+    
+    if(comando == 'Resolver problemas (resetar tabela local)')
+      resetar_tabela_local()
   }
   
   console('Saindo do script Zelador.')
