@@ -619,7 +619,7 @@ resetar_tabela_local <- function() {
 if(faz_executa_zelador) {
 # Prepara ---------------------------------------------------------------------------------------------------------
   console('Sigtap Omop, Script Zelador versão ', no_versão_zelador)
-  console('Por Fabrício Kury (fab@kury.dev) e Carlos Campos (cl@precisiondata.com.br), agosto de 2.022')
+  console('Por Fabrício Kury (fab@kury.dev) e Carlos Campos (cl@precisiondata.com.br), agosto-outubro de 2.022')
   if(!file.exists(dolt_exe))
     stop(paste0('Não foi possível encontrar o Dolt. Favor verificar a instalação.\n',
       'Arquivo não encontrado:\n', dolt_exe))
@@ -649,9 +649,9 @@ if(faz_executa_zelador) {
       comandos <- c(comandos,
         'Fazer fork',
         'Baixar linhas para mapear',
-        'Criar pull request',
         'Subir linhas mapeadas',
-        'Resolver problemas (resetar tabela local)')
+        'Criar pull request (opcional)',
+        'Resolver problemas: resetar tabela local2 (opcional)')
     }
     
     comando <- pede_comando(comandos, 'Escolha a operação desejada:')
@@ -668,13 +668,13 @@ if(faz_executa_zelador) {
     if(comando == 'Baixar linhas para mapear')
       baixa_linhas()
     
-    if(comando == 'Criar pull request')
-      pede_pull_request()
-    
     if(comando == 'Subir linhas mapeadas')
       sobe_linhas()
     
-    if(comando == 'Resolver problemas (resetar tabela local)')
+    if(comando == 'Criar pull request (opcional)')
+      pede_pull_request()
+    
+    if(comando == 'Resolver problemas: resetar tabela local (opcional)')
       resetar_tabela_local()
   }
   
