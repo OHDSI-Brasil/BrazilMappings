@@ -116,7 +116,7 @@ pede_comando <- function(comandos, mensagem, permite_zero = TRUE) {
       comando <- readLines(escolhe_stdin(), 1)
       fecha_stdin()
       comando <- substr(comando, 1, 1) # Pega apenas 1 caractere.
-      comando <- as.integer(comando)
+      comando <- suppressWarnings(as.integer(comando))
       if(is.null(comando)) # TODO: Isto é necessário?
         comando <- NA
     }, error = \(e) {
@@ -124,8 +124,12 @@ pede_comando <- function(comandos, mensagem, permite_zero = TRUE) {
     })
     
     # Verifica se o número corresponde a algum comando.
-    if(!(comando %in% seq_along(comandos) || (permite_zero && comando == 0)))
+    if(!is.na(comando) &&
+        !(comando %in% seq_along(comandos) || (permite_zero && comando == 0)))
       comando <- NA
+    
+    if(is.na(comando))
+      console('Por favor insira uma opção válida e aperte enter.')
   }
   comando
 }
@@ -188,7 +192,7 @@ conecta_mariadb <- function() {
 
 dolt <- function(..., wd = dolt_dir, verbose = TRUE) {
   proc_res <- processx::run(command = dolt_exe, args = c(...), wd = wd, error_on_status = FALSE)
-  if(proc_res$status != 0) {
+  if(verbose && proc_res$status != 0) {
     if(nchar(proc_res$stderr[1]) > 0)
       console('Erro:\n', proc_res$stderr)
   }
@@ -230,7 +234,7 @@ abre_dolt_sql <- function(verbose = FALSE) {
 
 
 # Controle --------------------------------------------------------------------------------------------------------
-if(!exists('faz_executa_zelador'))
+if(!exists('faz_executa_zelador')) # Esta variável é usada para executar o zelador.R a partir do admin.R.
   faz_executa_zelador <- TRUE
 
 dir_linhas <- './linhas'
@@ -245,31 +249,27 @@ colunas_a_subir <- c("mappingStatus", "equivalence", "statusSetOn", "conceptId",
 
 
 # Funções ---------------------------------------------------------------------------------------------------------
-obtém_creds <- function(sobrsc = FALSE) {
-  if(sobrsc || is.null(.GlobalEnv$creds)) {
-    credscheck <- dolt('creds', 'check')$stdout
-    .GlobalEnv$creds <- suppressWarnings(credscheck |>
-      strsplit('\n') |>
-      unlist())
-    if(verifica_creds(creds)) {
-      # Obtém o nome de usuário.
-      .GlobalEnv$username <- str_match(.GlobalEnv$creds[6], ' User: (.+)')[,2]
-    }
+verifica_credenciais <- function(sobrescrever = FALSE) {
+  if(sobrescrever || is.null(.GlobalEnv$credenciais)) {
+    dolt_creds_check <- dolt('creds', 'check', verbose = FALSE)
+    .GlobalEnv$credenciais <- suppressWarnings(
+      dolt_creds_check$stdout |> strsplit('\n') |> unlist()
+    )
   }
-  .GlobalEnv$creds
-}
-
-verifica_creds <- function(increds = character(0)) {
-  if(length(increds) == 0)
-    increds <- obtém_creds()
-  return('Success.' %in% increds)
+  
+  if('Success.' %in% credenciais) {
+    if(sobrescrever || is.null(.GlobalEnv$username)) {
+      # Obtém o nome de usuário.
+      .GlobalEnv$username <- str_match(credenciais[6], ' User: (.+)')[,2]
+      if(nchar(username) < 2)
+        stop('Falha ao obter nome de usuário.')
+    }
+    return(TRUE)
+  } else
+    return(FALSE)
 }
 
 gera_id_reserva <- function() {
-  # idr <- as.character(round(runif(1, 1, 10000000)))
-  # if(nchar(idr) > 5)
-  #   idr <- substr(idr, 1, 5)
-  # idr
   format(Sys.time(), '%m-%d-%H-%M')
 }
 
@@ -301,38 +301,28 @@ usa_repositório <- function(repo) {
 
 # Faz login no DoltHub --------------------------------------------------------------------------------------------
 inicia_dolthub <- function() {
-  if(verifica_creds(obtém_creds()))
-    if(pergunta_sim_não('Login já detectado para ', username, '. Deseja continuar? s/n') == FALSE)
+  if(verifica_credenciais())
+    if(pergunta_sim_não('Login já detectado para ', username, '. Deseja continuar e sobrescrever? s/n') == FALSE)
         return()
   
-  console('Aperte Enter para abrir o navegador na página do DoltHub.\nSe você não fez login no site, será preciso ',
-    'fazê-lo. Após o login (caso precise fazer), o site redirecionará para a página de criar credenciais. Por favor ', 
-    'preencha qualquer coisa no campo "Description" (não faz diferença) e confirme a criação da credencial.',
-    '\nApós realizar isto, retorne para o script Zelador, que identificará a credencial criada.\n\n',
-    'Aperte Enter para abrir o navegador na página do DoltHub.\n')
+  console('Aperte Enter para abrir o navegador na página do DoltHub. Se você não fez login no site, será preciso ',
+    'fazê-lo. O site redirecionará para a página de criar credenciais. Por favor preencha qualquer coisa no campo ',
+    '"Description" (não faz diferença) e confirme a criação da credencial. Após isso, retorne para o script Zelador, ',
+    'que identificará a credencial criada.\n\n',
+    'Aperte Enter para abrir o navegador na página de credenciais no DoltHub.\n')
   pede_enter()
   dolt('login')
   
-  creds <- obtém_creds(sobrsc = TRUE)
-  if(!verifica_creds(creds)) {
-    console('Erro ao fazer login.')
-  } else {
-    # Obtém o nome de usuário.
-    .GlobalEnv$username <- str_match(creds[6], ' User: (.+)')[,2]
-    if(!(nchar(username) > 2))
-      stop('Falha ao obter nome de usuário.')
-    
+  if(verifica_credenciais(sobrescrever = TRUE))
     console('Login realizado com sucesso para usuário ', username, '.')
-  }
+  else
+    console('Erro ao fazer login.')
 }
 
 
 # Faz o fork ------------------------------------------------------------------------------------------------------
 fazer_fork <- function() {
-  if(!verifica_creds())
-    stop('Erro ao fazer login.')
-
-  # Abrir a página para fazer o fork.
+  # Simplesmente abre a página para fazer o fork.
   url_repo <- 'https://www.dolthub.com/repositories/ohdsi-brasil/sigtap_omop'
   console('Aperte Enter para abrir o navegador na página de fazer o fork do repositório ohdsi-brasil/sigtap_omop. ',
     'Se preferir, copie e cole o endereço abaixo:\n',
@@ -637,7 +627,7 @@ if(faz_executa_zelador) {
 # Ciclo principal -------------------------------------------------------------------------------------------------
   já_comunicou_login_detectado <- FALSE
   while(TRUE) {
-    tem_credenciais <- verifica_creds()
+    tem_credenciais <- verifica_credenciais()
     
     comandos <- c('Fazer login ao DoltHub')
     
@@ -651,7 +641,7 @@ if(faz_executa_zelador) {
         'Baixar linhas para mapear',
         'Subir linhas mapeadas',
         'Criar pull request (opcional)',
-        'Resolver problemas: resetar tabela local2 (opcional)')
+        'Resolver problemas: resetar tabela local (opcional)')
     }
     
     comando <- pede_comando(comandos, 'Escolha a operação desejada:')
