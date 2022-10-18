@@ -590,6 +590,10 @@ sobe_linhas <- function() {
 
 # Resetar tabela local --------------------------------------------------------------------------------------------
 resetar_tabela_local <- function() {
+  if(pergunta_sim_não('Esta operação irá sobrescrever a tabela local com o conteúdo do DoltHub.\n',
+    'Deseja continuar? s/n') == FALSE)
+    return()
+  
   # Executa o Dolt em processo separado.
   abre_dolt_sql()
   
