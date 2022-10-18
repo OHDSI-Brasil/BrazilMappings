@@ -12,7 +12,7 @@ bibliotecas_global <- c('tidyverse', 'dbplyr', 'processx', 'ps', 'DBI', 'RMariaD
 dolt_dir <- suppressWarnings(normalizePath('./dolt'))
 dolt_exe <- paste0(dolt_dir, '/dolt.exe')
 arq_config <- './config.txt'
-no_versão_zelador <- '10-16'
+no_versão_zelador <- '10-18'
 
 
 # Funções (espinha) -----------------------------------------------------------------------------------------------
@@ -607,7 +607,7 @@ resetar_tabela_local <- function() {
 
 # Execução --------------------------------------------------------------------------------------------------------
 if(faz_executa_zelador) {
-# Prepara ---------------------------------------------------------------------------------------------------------
+# Boas-vindas e preparação ----------------------------------------------------------------------------------------
   console('Sigtap Omop, Script Zelador versão ', no_versão_zelador)
   console('Por Fabrício Kury (fab@kury.dev) e Carlos Campos (cl@precisiondata.com.br), agosto-outubro de 2.022')
   if(!file.exists(dolt_exe))
