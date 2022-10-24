@@ -113,14 +113,14 @@ carrega_bibliotecas <- function(bibliotecas = bibliotecas_global) {
     suppressWarnings(suppressPackageStartupMessages(library(biblioteca, character.only = TRUE)))
 }
 
-pede_comando <- function(comandos, mensagem, permite_zero = TRUE) {
+pede_comando <- function(comandos, mensagem, permite_zero = TRUE, comando_zero = 'Cancelar') {
   comando <- NA
   while(is.na(comando)) {
     console(mensagem)
     for(i in seq_along(comandos))
       console(i, ') ', comandos[i])
     if(permite_zero)
-      console('0) Cancelar')
+      console('0) ', comando_zero)
     
     # Tentar ler um número do comando. Se falhar, pedir comando de novo.
     tryCatch({
@@ -328,6 +328,9 @@ usa_repositório <- function(repo) {
   ## Atualiza a tabela local.
   console('Baixando atualizações de ', endereço_central, '.')
   dbExecute(dbd, paste0("call dolt_fetch('", remote_central, "');"))
+  
+  # dbGetQuery(dbd, dolt diff main remotes/central/main tb_procedimento_dolt --summary)
+  
   dbExecute(dbd, paste0("call dolt_merge('remotes/", remote_central, "/main');"))
   
   return(TRUE)
@@ -586,7 +589,7 @@ sobe_linhas <- function() {
   não_reservadas <- linhas_sobe |>
     filter(! sourceCode %in% local(códigos_reservados$sourceCode))
   
-# Executa SQL. ----------------------------------------------------------------------------------------------------
+# Produz e executa comandos SQL -----------------------------------------------------------------------------------
   faz_sql_update <- function(linhas) {
     # Gerar o comando SQL e executá-lo linha por linha.
     sql_início <- paste0('update ', nome_tabela, '_dolt set')
@@ -600,7 +603,7 @@ sobe_linhas <- function() {
           valor_sql = "''"
         paste0(coluna, ' = ', valor_sql)
       }) |>
-        paste(collapse = ',\n')
+        paste(collapse = ', ')
       
       sql_fim <- paste0('where sourceCode = \'', sourceCode, '\' and statusSetBy = \'', username, '\';')
       
@@ -654,8 +657,8 @@ sobe_linhas <- function() {
 
 # Resetar tabela local --------------------------------------------------------------------------------------------
 resetar_tabela_local <- function() {
-  if(pergunta_sim_não('Esta operação irá sobrescrever a tabela local com o conteúdo do DoltHub.\n',
-    'Deseja continuar? s/n') == FALSE)
+  if(!pergunta_sim_não('Esta operação irá sobrescrever a tabela local com o conteúdo do DoltHub.\n',
+    'Deseja continuar? s/n'))
     return()
   
   # Executa o Dolt em processo separado.
@@ -665,7 +668,8 @@ resetar_tabela_local <- function() {
   conecta_mariadb()
   
   # Troca para o sigtap_omop.
-  dbExecute(dbd, paste0('use ', proj_repo, ';'))
+  if(!usa_repositório(proj_repo))
+    return()
   
   console('Executando dolt checkout.')
   dbExecute(dbd, paste0('call dolt_checkout("', nome_tabela, '_dolt");'))
@@ -713,7 +717,7 @@ if(faz_executa_zelador) {
         'Resolver problemas: resetar tabela local (opcional)')
     }
     
-    comando <- pede_comando(comandos, 'Escolha a operação desejada:')
+    comando <- pede_comando(comandos, 'Escolha a operação desejada:', comando_zero = 'Sair')
     if(comando == 0)
       return()
     comando <- comandos[comando]
