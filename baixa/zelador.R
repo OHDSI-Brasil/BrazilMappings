@@ -6,16 +6,27 @@
 #' Início: 2022-08-11 20:47-4.
 #' 
 
+# Controle --------------------------------------------------------------------------------------------------------
+if(!exists('faz_executa_zelador')) # Esta variável é usada para executar o zelador.R a partir do admin.R.
+  faz_executa_zelador <- TRUE
+
+
 # Variáveis (espinha) ---------------------------------------------------------------------------------------------
+# Estas variáveis são compartilhadas com o admin.R.
 usuário_admin <- 'sigtap_omop_admin'
 bibliotecas_global <- c('tidyverse', 'dbplyr', 'processx', 'ps', 'DBI', 'RMariaDB')
 dolt_dir <- suppressWarnings(normalizePath('./dolt'))
-dolt_exe <- paste0(dolt_dir, '/dolt.exe')
-arq_config <- './config.txt'
-no_versão_zelador <- '10-18'
+dolt_exe <- paste0(dolt_dir, '\\dolt.exe')
+arq_config <- '.\\config.txt'
+adicional_de_distribuição <- 1 # Número de participantes acima do limite de distribuição, para receber códigos, a fim 
+# de conseguir atingir o limite mesmo se nem todos os participantes que reservaram uma linha de fato subam ela mapeada.
+
+remote_central <- 'central'
+endereço_central <- 'ohdsi-brasil/sigtap_omop'
 
 
 # Funções (espinha) -----------------------------------------------------------------------------------------------
+# Estas funções são compartilhadas com o admin.R.
 lê_config <- function(endr) {
 # Lê config.txt ---------------------------------------------------------------------------------------------------
   if(!file.exists(endr))
@@ -165,19 +176,24 @@ pede_pull_request <- function() {
 
 add_commit_push <- function(commit_message, pedir_pull_request = FALSE) {
   tryCatch({
-    console('Produzindo dolt push.')
     dbExecute(dbd, "call dolt_add('.');")
     dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
-    dbExecute(dbd, "call dolt_push();")
     
-    console('Dolt push completo.')
-    ## Gerar o pull request.
-    if(pedir_pull_request)
-      pede_pull_request()
+    console('Enviando para ', username, '/', proj_repo, ' (dolt push).')
+    dbExecute(dbd, "call dolt_push();")
   }, error = \(e) {
-    console('Erro ao executar dolt push:')
-    print(e)
+    if(grepl('nothing to commit', e, fixed = TRUE)) {
+      console('Operação já realizada antes (nothing to commit).')
+    } else {
+      console('Erro ao enviar para o DoltHub:')
+      print(e)
+      pedir_pull_request <- FALSE
+    }
   })
+  
+  ## Gerar o pull request.
+  if(pedir_pull_request)
+    pede_pull_request()
 }
 
 conecta_mariadb <- function() {
@@ -190,7 +206,9 @@ conecta_mariadb <- function() {
   .GlobalEnv$dbd
 }
 
-dolt <- function(..., wd = dolt_dir, verbose = TRUE) {
+dolt <- function(..., wd = dolt_dir, repo = NULL, verbose = TRUE) {
+  if(!is.null(repo))
+    wd <- paste0(wd, '/', repo)
   proc_res <- processx::run(command = dolt_exe, args = c(...), wd = wd, error_on_status = FALSE)
   if(verbose && proc_res$status != 0) {
     if(nchar(proc_res$stderr[1]) > 0)
@@ -233,10 +251,9 @@ abre_dolt_sql <- function(verbose = FALSE) {
 }
 
 
-# Controle --------------------------------------------------------------------------------------------------------
-if(!exists('faz_executa_zelador')) # Esta variável é usada para executar o zelador.R a partir do admin.R.
-  faz_executa_zelador <- TRUE
-
+# Variáveis (Zelador) ---------------------------------------------------------------------------------------------
+# Estas variáveis são de uso do Zelador.
+no_versão_zelador <- '10-24'
 dir_linhas <- './linhas'
 dir_linhas_sobe <- paste0(dir_linhas, '/upload')
 limite_distribuição <- 5
@@ -248,7 +265,8 @@ colunas_a_subir <- c("mappingStatus", "equivalence", "statusSetOn", "conceptId",
   "mappingType", "comment", "createdBy", "createdOn", "assignedReviewer")
 
 
-# Funções ---------------------------------------------------------------------------------------------------------
+# Funções (Zelador) -----------------------------------------------------------------------------------------------
+# Estas funções são de uso do Zelador.
 verifica_credenciais <- function(sobrescrever = FALSE) {
   if(sobrescrever || is.null(.GlobalEnv$credenciais)) {
     dolt_creds_check <- dolt('creds', 'check', verbose = FALSE)
@@ -273,27 +291,44 @@ gera_id_reserva <- function() {
   format(Sys.time(), '%m-%d-%H-%M')
 }
 
+
+# Usa e clona repositório -----------------------------------------------------------------------------------------
 usa_repositório <- function(repo) {
   # Confere quais databases (repositórios do DoltHub) já existem.
   bases <- dbGetQuery(dbd, 'show databases;') |> pull(Database)
   
   # O Sigtap Omop já existe localmente?
-  if(!repo %in% bases) {  # proj_repo vem do lê_config()
+  recém_criado <- FALSE
+  if(! repo %in% bases) { # proj_repo vem do lê_config()
     # Clonar repositório.
-    repo_address <- paste0(username, '/sigtap_omop')
+    recém_criado <- TRUE
+    repo_address <- paste0(username, '/', repo)
     console('Clonando repositório ', repo_address, '.')
     dbGetQuery(dbd, paste0("call dolt_clone('", repo_address, "');"))
     
-    # Tentar novamente encontrar o Sigtap Omop na lista de repositórios locais. Se falhar, abortar.
+    # Tentar novamente encontrar o repo na lista de repositórios locais. Se falhar, abortar.
     bases <- dbGetQuery(dbd, 'show databases;') |> pull(Database)
-    if(!repo %in% bases) {
-      console('Falha ao clonar repositório ', repo, '.')
+    
+    if(! repo %in% bases) {
+      console('Falha ao clonar ', repo_address, '.')
       return(FALSE)
     }
   }
   
   # Troca para o sigtap_omop.
   dbExecute(dbd, paste0('use ', proj_repo, ';'))
+  
+  # Verifica se tem o remote, adiciona se preciso.
+  dolt_remotes <- dbGetQuery(dbd, 'select name from dolt_remotes;') |> pull()
+  if(! remote_central %in% dolt_remotes) {
+    console('Criando remote ', remote_central, ' -> ', endereço_central, '.')
+    dbExecute(dbd, paste0("call dolt_remote('add', '", remote_central, "', '", endereço_central, "');"))
+  }
+  
+  ## Atualiza a tabela local.
+  console('Baixando atualizações de ', endereço_central, '.')
+  dbExecute(dbd, paste0("call dolt_fetch('", remote_central, "');"))
+  dbExecute(dbd, paste0("call dolt_merge('remotes/", remote_central, "/main');"))
   
   return(TRUE)
 }
@@ -343,17 +378,13 @@ baixa_linhas <- function() {
   # Conecta ao Dolt via SQL.
   conecta_mariadb()
 
-# Acessa a database sigtap_omop; clona se preciso. ----------------------------------------------------------------
+  # Acessa a database sigtap_omop; clona se preciso.
   if(!usa_repositório(proj_repo))
     return()
   
-  # Executa dolt pull.
-  console('Atualizando a tabela local (dolt pull).')
-  dbExecute(dbd, paste0('call dolt_pull();'))
-  
+# Verifica/pega linhas que este usuário já pegou antes ------------------------------------------------------------
   tabela_dolt <- tbl(dbd, paste0(nome_tabela, '_dolt')) # tabela lazy
   
-# Verifica/pega linhas que este usuário já pegou antes ------------------------------------------------------------
   # Quais códigos este usuário já pegou antes?
   linhas_do_usuário <- tabela_dolt |>
     filter(statusSetBy == username) |>
@@ -364,7 +395,7 @@ baixa_linhas <- function() {
     filter(mappingStatus == 'UNCHECKED')
   
   n_linhas_aguardando <- linhas_aguardando |> tally() |> pull(n) |> as.integer()
-3
+
   if(n_linhas_aguardando > 0)
     console('Encontradas ', n_linhas_aguardando, ' linhas previamente reservadas e ainda não mapeadas.')
   
@@ -406,7 +437,7 @@ baixa_linhas <- function() {
     sel_a <- tabela_dolt |>
       group_by(sourceCode) |>
       summarise(participantes = n_distinct(statusSetBy)) |>
-      filter(participantes < limite_distribuição + 1)
+      filter(participantes < limite_distribuição + adicional_de_distribuição)
     
     # Remover os códigos que este usuário já mapeou ou reservou.
     sel_a <- sel_a |>
@@ -418,9 +449,7 @@ baixa_linhas <- function() {
       select(-prévio)
     
     # Contar quantos termos.
-    n_termos_disponíveis <- sel_a |>
-      tally() |>
-      pull(n)
+    n_termos_disponíveis <- sel_a |> tally() |> pull(n)
     
     if(n_termos_disponíveis == 0)
       console('Não há termos não-mapeados disponíveis.')
@@ -437,26 +466,31 @@ baixa_linhas <- function() {
         return()
       }
       
+      # Pega amostra aleatória.
+      # Estratégia de amostragem: pega um ponto aleatório na lista, e consome N itens a partir dele.
+      
       termos_disponíveis <- sel_a |>
         select(sourceCode) |>
         collect() |>
         pull(sourceCode)
       
-      # Pega amostra aleatória.
-      # Estratégia de amostragem: pega um ponto aleatório na lista, e consome N itens a partir dele.
       fim_da_lista <- length(termos_disponíveis) - n_linhas_faltantes
+      
       ponto_na_lista <- sample.int(fim_da_lista, 1) # Ponto aleatório.
-      novos_termos <- termos_disponíveis[ponto_na_lista:(ponto_na_lista+n_linhas_faltantes-1)]
+      
+      ponto_final_na_lista <- ponto_na_lista + n_linhas_faltantes - 1
+      
+      novos_termos <- termos_disponíveis[ponto_na_lista:ponto_final_na_lista]
+      
       termos_selecionados <- c(termos_selecionados, novos_termos)
       
-      console('Fazendo a reserva de novas linhas.\nID da reserva: ', id_reserva)
+      console('Fazendo a reserva de novas linhas.\nID da reserva: ', id_reserva, '.')
       
       console('Inserindo novas linhas.')
       
       # Baixa as linhas "em branco", isto é, com statusSetBy == usuário_admin.
       novas_linhas <- tabela_dolt |>
-        filter(sourceCode %in% novos_termos
-          && statusSetBy == usuário_admin) |>
+        filter(sourceCode %in% novos_termos && statusSetBy == usuário_admin) |>
         collect()
       
       # Altera o statusSetBy e reseta o mappingStatus
@@ -465,13 +499,16 @@ baixa_linhas <- function() {
           statusSetBy = username,
           mappingStatus = 'UNCHECKED')
       
-      # Executa o SQL
-      sql_txt <- sqlAppendTable(dbd, paste0(nome_tabela, '_dolt'), novas_linhas, row.names = FALSE) |> as.character()
+      # Gera o comando SQL INSERT INTO correspondente ao conteúdo da tabela novas_linhas.
+      sql_txt <- sqlAppendTable(dbd, paste0(nome_tabela, '_dolt'), novas_linhas, row.names = FALSE) |>
+        as.character()
+      
+      # Executa no Dolt o SQL gerado.
       dbExecute(dbd, sql_txt)
       
-      # Executa os comandos do Dolt.
-      commit_message <- paste0('Reserva de ', n_linhas_faltantes, ' linhas para ', username,
-        ' (Zelador ', id_reserva, ').')
+      # Executa os comandos de versionamento do Dolt.
+      commit_message <- paste0('Reserva de ', n_linhas_faltantes,
+        ' linhas para ', username, ' (Zelador ', id_reserva, ').')
       
       add_commit_push(commit_message, pedir_pull_request = TRUE)
     }
@@ -498,38 +535,6 @@ baixa_linhas <- function() {
 }
 
 
-# Refaz push ------------------------------------------------------------------------------------------------------
-if(F) {
-  # Aposentado em 2022-10-16 14:26
-  refazer_push <- function() {
-# Prepara ---------------------------------------------------------------------------------------------------------
-  # Executa o Dolt em processo separado.
-  abre_dolt_sql()
-  
-  # Conecta ao Dolt via SQL.
-  conecta_mariadb()
-
-  # Troca para o sigtap_omop.
-  dbExecute(dbd, paste0('use ', proj_repo, ';'))
-  
-# Faz o push ------------------------------------------------------------------------------------------------------
-  console('Executando dolt push.')
-  dbExecute(dbd, "call dolt_push('--set-upstream', 'origin', 'main');")
-  
-  # Gera o pull request da reserva.
-  ## Gerar o pull request.
-  url_pr <- 'https://www.dolthub.com/repositories/ohdsi-brasil/sigtap_omop/pulls/new?refName=main'
-  
-  console('Aperte Enter para abrir o navegador na página para fazer o pull request:\n', url_pr, '\n\n',
-    'Por favor lembre-se que este pull request é obrigatório.')
-  pede_enter()
-  
-  console('Abrindo o navegador. Por favor preencha os campos e confirme o pull request.')
-  browseURL(url_pr)
-}
-}
-
-
 # Sobe linhas -----------------------------------------------------------------------------------------------------
 sobe_linhas <- function() {
 # Pergunta qual arquivo -------------------------------------------------------------------------------------------
@@ -547,7 +552,14 @@ sobe_linhas <- function() {
   arq_selecionado <- arqs[comando]
   
   console('Lendo ', arq_selecionado, '.')
-  linhas_sobe <- read_csv(paste0(dir_linhas_sobe, '/', arq_selecionado), show_col_types = FALSE)
+  caminho_arq_selecionado <- paste0(dir_linhas_sobe, '/', arq_selecionado)
+  linhas_sobe <- read_csv(caminho_arq_selecionado, show_col_types = FALSE)
+  
+  if('statusSetBy' %in% colnames(linhas_sobe)) {
+    linhas_sobe$statusSetBy <- username
+  } else {
+    stop(paste0('Erro: formato do arquivo ', caminho_arq_selecionado, ' não reconhecido.'))
+  }
 
 # Prepara ---------------------------------------------------------------------------------------------------------
   # Executa o Dolt em processo separado.
@@ -557,32 +569,84 @@ sobe_linhas <- function() {
   conecta_mariadb()
   
   # Troca para o sigtap_omop.
-  dbExecute(dbd, paste0('use ', proj_repo, ';'))
-  
-# Executa SQL UPDATE ----------------------------------------------------------------------------------------------
-  console('Executando comandos SQL UPDATE.')
+  if(!usa_repositório(proj_repo))
+    return()
 
-  sql_início <- paste0('update ', nome_tabela, '_dolt set')
+# Confere quais linhas foram reservadas com sucesso. --------------------------------------------------------------
+  tabela_dolt <- tbl(dbd, paste0(nome_tabela, '_dolt')) # tabela lazy
   
-  for(i in 1:nrow(linhas_sobe)) {
-    sourceCode <- linhas_sobe$sourceCode[i]
+  códigos_reservados <- tabela_dolt |>
+    filter(statusSetBy == username && sourceCode %in% local(linhas_sobe$sourceCode)) |>
+    select(sourceCode) |>
+    collect()
+  
+  linhas_reservadas <- linhas_sobe |>
+    filter(sourceCode %in% local(códigos_reservados$sourceCode))
+  
+  não_reservadas <- linhas_sobe |>
+    filter(! sourceCode %in% local(códigos_reservados$sourceCode))
+  
+# Executa SQL. ----------------------------------------------------------------------------------------------------
+  faz_sql_update <- function(linhas) {
+    # Gerar o comando SQL e executá-lo linha por linha.
+    sql_início <- paste0('update ', nome_tabela, '_dolt set')
     
-    sql_meio <- lapply(colunas_a_subir, \(coluna) {
-      valor_sql <- as.character(sqlData(dbd, linhas_sobe[[i, coluna]]))
-      if(valor_sql == 'NA')
-        valor_sql = "''"
-      paste0(coluna, ' = ', valor_sql)
-    }) |>
-      paste(collapse = ',\n')
+    for(i in 1:nrow(linhas)) {
+      sourceCode <- linhas$sourceCode[i]
+      
+      sql_meio <- lapply(colunas_a_subir, \(coluna) {
+        valor_sql <- as.character(sqlData(dbd, linhas[[i, coluna]]))
+        if(valor_sql == 'NA')
+          valor_sql = "''"
+        paste0(coluna, ' = ', valor_sql)
+      }) |>
+        paste(collapse = ',\n')
+      
+      sql_fim <- paste0('where sourceCode = \'', sourceCode, '\' and statusSetBy = \'', username, '\';')
+      
+      # Executa o comando SQL.
+      sql_txt <- paste(sql_início, sql_meio, sql_fim, sep = '\n')
+      dbExecute(dbd, sql_txt)
+    }
+  }
+  
+  console('Encontradas ', nrow(linhas_reservadas), ' linhas com reserva e ', nrow(não_reservadas),' sem reserva. ',
+    'Irei subir as com reserva, e reservar e subir as sem reserva.')
+  
+  if(nrow(linhas_reservadas) > 0) {
+    console('Subindo linhas com reserva.')
+    faz_sql_update(linhas_reservadas)
+  }
+  
+  faz_sql_insert <- function(linhas) {
+    # Baixa as linhas "em branco", isto é, com statusSetBy == usuário_admin.
+    novas_linhas <- tabela_dolt |>
+      filter(sourceCode %in% local(linhas$sourceCode) && statusSetBy == usuário_admin) |>
+      collect()
     
-    sql_fim <- paste0('where sourceCode = \'', sourceCode, '\' and statusSetBy = \'', username, '\';')
+    # Ordenar pela mesma coluna.
+    novas_linhas <- novas_linhas |> arrange(sourceCode)
+    linhas <- linhas |> arrange(sourceCode)
     
-    # Executa o comando SQL.
-    sql_txt <- paste(sql_início, sql_meio, sql_fim, sep = '\n')
+    novas_linhas[, colunas_a_subir] <- linhas[, colunas_a_subir]
+    novas_linhas$statusSetBy <- username
+    
+    # Remover NAs para não dar conflito no SQL.
+    novas_linhas[is.na(novas_linhas)] <- ''
+    
+    # Gera o comando SQL INSERT INTO correspondente ao conteúdo da tabela novas_linhas.
+    sql_txt <- sqlAppendTable(dbd, paste0(nome_tabela, '_dolt'), novas_linhas, row.names = FALSE) |>
+      as.character()
+    
+    # Executa no Dolt o SQL gerado.
     dbExecute(dbd, sql_txt)
   }
   
-
+  if(nrow(não_reservadas) > 0) {
+    console('Reservando e subindo linhas sem reserva.')
+    faz_sql_insert(não_reservadas)
+  }
+  
 # Atualiza o Dolt e gera o pull request ---------------------------------------------------------------------------
   add_commit_push(paste0('Zelador sobe ', arq_selecionado, ' de ', username, '.'), pedir_pull_request = TRUE)
 }
@@ -612,20 +676,21 @@ resetar_tabela_local <- function() {
 # Execução --------------------------------------------------------------------------------------------------------
 if(faz_executa_zelador) {
 # Boas-vindas e preparação ----------------------------------------------------------------------------------------
-  console('Sigtap Omop, Script Zelador versão ', no_versão_zelador)
-  console('Por Fabrício Kury (fab@kury.dev) e Carlos Campos (cl@precisiondata.com.br), agosto-outubro de 2.022')
   if(!file.exists(dolt_exe))
     stop(paste0('Não foi possível encontrar o Dolt. Favor verificar a instalação.\n',
       'Arquivo não encontrado:\n', dolt_exe))
+  
+  console('Sigtap Omop, Script Zelador versão ', no_versão_zelador)
+  console('Por Fabrício Kury (fab@kury.dev) e Carlos Campos (cl@precisiondata.com.br), agosto-outubro de 2.022')
 
-# Bibliotecas -----------------------------------------------------------------------------------------------------
+  # Bibliotecas
   if(length(instala_bibliotecas()) != 0)
     stop('Erro ao instalar bibliotecas.')
   
   # Carrega pacotes.
   carrega_bibliotecas()
 
-# Config ----------------------------------------------------------------------------------------------------------
+  # Config
   lê_config(arq_config)
   
 # Ciclo principal -------------------------------------------------------------------------------------------------
