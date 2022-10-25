@@ -24,7 +24,7 @@ adicional_de_distribuição <- 1 # Número de participantes acima do limite de d
 remote_central <- 'central'
 endereço_central <- 'ohdsi-brasil/sigtap_omop'
 
-remote_usuário <- 'origin'
+remote_usuario <- 'origin'
 # endereço_usuário <- paste0(username, '/', proj_repo) # criado a partir do lê_config().
 
 
@@ -183,7 +183,7 @@ add_commit_push <- function(commit_message, pedir_pull_request = FALSE) {
     dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
     
     console('Enviando para ', endereço_usuário, ' (dolt push).')
-    dbExecute(dbd, paste0("call dolt_push('", remote_usuário, "');"))
+    dbExecute(dbd, paste0("call dolt_push('", remote_usuario, "');"))
   }, error = \(e) {
     if(grepl('nothing to commit', e, fixed = TRUE)) {
       console('Operação já realizada antes (nothing to commit).')
@@ -236,17 +236,17 @@ fecha_dolt_sql <- function() {
 
 abre_dolt_sql <- function(verbose = FALSE) {
   processos <- ps::ps()
-  máscara <- processos$name == 'dolt.exe'
-  if(!is.null(máscara) && any(máscara)) {
+  mascara <- processos$name == 'dolt.exe'
+  if(!is.null(mascara) && any(mascara)) {
     if(verbose) {
       message('Dolt.exe já aberto em:')
-      print(processos[máscara,])
+      print(processos[mascara,])
     }
   } else {
     # if(verbose)
     console('Executando o Dolt.')
     dolt_process <- process$new(dolt_exe, c('sql-server'), wd = dolt_dir, supervise = TRUE)
-    assign('proc_sql', dolt_process, envir = .GlobalEnv)
+    .GlobalEnv$proc_sql <- dolt_process
     
     # Esperar para conectar via SQL. Não sei se isto é necessário.
     Sys.sleep(1)
@@ -335,8 +335,8 @@ usa_repositório <- function(repo) {
   if(! remote_central %in% dolt_remotes)
     cria_remote(remote_central, endereço_central)
   
-  if(! remote_usuário %in% dolt_remotes)
-    cria_remote(remote_usuário, endereço_usuário)
+  if(! remote_usuario %in% dolt_remotes)
+    cria_remote(remote_usuario, endereço_usurio)
   
   ## Atualiza a tabela local.
   console('Baixando atualizações de ', endereço_central, '.')
