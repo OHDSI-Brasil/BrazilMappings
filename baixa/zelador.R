@@ -24,6 +24,9 @@ adicional_de_distribuição <- 1 # Número de participantes acima do limite de d
 remote_central <- 'central'
 endereço_central <- 'ohdsi-brasil/sigtap_omop'
 
+remote_usuário <- 'origin'
+# endereço_usuário <- paste0(username, '/', proj_repo) # criado a partir do lê_config().
+
 
 # Funções (espinha) -----------------------------------------------------------------------------------------------
 # Estas funções são compartilhadas com o admin.R.
@@ -179,8 +182,8 @@ add_commit_push <- function(commit_message, pedir_pull_request = FALSE) {
     dbExecute(dbd, "call dolt_add('.');")
     dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
     
-    console('Enviando para ', username, '/', proj_repo, ' (dolt push).')
-    dbExecute(dbd, "call dolt_push();")
+    console('Enviando para ', endereço_usuário, ' (dolt push).')
+    dbExecute(dbd, paste0("call dolt_push('", remote_usuário, "');"))
   }, error = \(e) {
     if(grepl('nothing to commit', e, fixed = TRUE)) {
       console('Operação já realizada antes (nothing to commit).')
@@ -232,9 +235,9 @@ fecha_dolt_sql <- function() {
 }
 
 abre_dolt_sql <- function(verbose = FALSE) {
-  processos <- ps()
+  processos <- ps::ps()
   máscara <- processos$name == 'dolt.exe'
-  if(any(máscara)) {
+  if(!is.null(máscara) && any(máscara)) {
     if(verbose) {
       message('Dolt.exe já aberto em:')
       print(processos[máscara,])
@@ -281,6 +284,7 @@ verifica_credenciais <- function(sobrescrever = FALSE) {
       .GlobalEnv$username <- str_match(credenciais[6], ' User: (.+)')[,2]
       if(nchar(username) < 2)
         stop('Falha ao obter nome de usuário.')
+      .GlobalEnv$endereço_usuário <- paste0(username, '/', proj_repo)
     }
     return(TRUE)
   } else
@@ -295,7 +299,8 @@ gera_id_reserva <- function() {
 # Usa e clona repositório -----------------------------------------------------------------------------------------
 usa_repositório <- function(repo) {
   # Confere quais databases (repositórios do DoltHub) já existem.
-  bases <- dbGetQuery(dbd, 'show databases;') |> pull(Database)
+  bases <- dbGetQuery(dbd, 'show databases;') |>
+    pull(Database)
   
   # O Sigtap Omop já existe localmente?
   recém_criado <- FALSE
@@ -307,7 +312,8 @@ usa_repositório <- function(repo) {
     dbGetQuery(dbd, paste0("call dolt_clone('", repo_address, "');"))
     
     # Tentar novamente encontrar o repo na lista de repositórios locais. Se falhar, abortar.
-    bases <- dbGetQuery(dbd, 'show databases;') |> pull(Database)
+    bases <- dbGetQuery(dbd, 'show databases;') |>
+      pull(Database)
     
     if(! repo %in% bases) {
       console('Falha ao clonar ', repo_address, '.')
@@ -320,17 +326,22 @@ usa_repositório <- function(repo) {
   
   # Verifica se tem o remote, adiciona se preciso.
   dolt_remotes <- dbGetQuery(dbd, 'select name from dolt_remotes;') |> pull()
-  if(! remote_central %in% dolt_remotes) {
-    console('Criando remote ', remote_central, ' -> ', endereço_central, '.')
-    dbExecute(dbd, paste0("call dolt_remote('add', '", remote_central, "', '", endereço_central, "');"))
+  
+  cria_remote <- function(nome, endereço) {
+    console('Criando remote ', nome, ' -> ', endereço, '.')
+    dbExecute(dbd, paste0("call dolt_remote('add', '", nome, "', '", endereço, "');"))
   }
+  
+  if(! remote_central %in% dolt_remotes)
+    cria_remote(remote_central, endereço_central)
+  
+  if(! remote_usuário %in% dolt_remotes)
+    cria_remote(remote_usuário, endereço_usuário)
   
   ## Atualiza a tabela local.
   console('Baixando atualizações de ', endereço_central, '.')
   dbExecute(dbd, paste0("call dolt_fetch('", remote_central, "');"))
-  
   # dbGetQuery(dbd, dolt diff main remotes/central/main tb_procedimento_dolt --summary)
-  
   dbExecute(dbd, paste0("call dolt_merge('remotes/", remote_central, "/main');"))
   
   return(TRUE)
