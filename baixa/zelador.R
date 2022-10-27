@@ -24,7 +24,7 @@ adicional_de_distribuição <- 1 # Número de participantes acima do limite de d
 remote_central <- 'central'
 endereço_central <- 'ohdsi-brasil/sigtap_omop'
 
-remote_usuario <- 'origin'
+remote_usuário <- 'origin'
 # endereço_usuário <- paste0(username, '/', proj_repo) # criado a partir do lê_config().
 
 
@@ -129,7 +129,8 @@ pede_comando <- function(comandos, mensagem, permite_zero = TRUE, comando_zero =
     tryCatch({
       comando <- readLines(escolhe_stdin(), 1)
       fecha_stdin()
-      comando <- substr(comando, 1, 1) # Pega apenas 1 caractere.
+      
+      comando <- substr(comando, 1, 2) # Pega apenas 2 caracteres.
       comando <- suppressWarnings(as.integer(comando))
       if(is.null(comando)) # TODO: Isto é necessário?
         comando <- NA
@@ -180,19 +181,40 @@ pede_pull_request <- function() {
 add_commit_push <- function(commit_message, pedir_pull_request = FALSE) {
   tryCatch({
     dbExecute(dbd, "call dolt_add('.');")
+  },
+    error = \(e) {
+      console('Erro no dolt add: ')
+      print(e)
+      pedir_pull_request <- FALSE
+      return()
+    }
+  )
+  
+  tryCatch({
     dbExecute(dbd, paste0("call dolt_commit('-m', '", commit_message, "');"))
-    
+  },
+    error = \(e) {
+      if(grepl('nothing to commit', e, fixed = TRUE)) {
+        console('Operação já realizada antes (nothing to commit). Continuarei mesmo assim.')
+      } else {
+        console('Erro no dolt commit: ')
+        print(e)
+        pedir_pull_request <- FALSE
+        return()
+      }
+    }
+  )
+  
+  tryCatch({
     console('Enviando para ', endereço_usuário, ' (dolt push).')
-    dbExecute(dbd, paste0("call dolt_push('", remote_usuario, "');"))
-  }, error = \(e) {
-    if(grepl('nothing to commit', e, fixed = TRUE)) {
-      console('Operação já realizada antes (nothing to commit).')
-    } else {
-      console('Erro ao enviar para o DoltHub:')
+    dbExecute(dbd, paste0("call dolt_push('--set-upstream', '", remote_usuário, "', 'main');"))
+  },
+    error = \(e) {
+      console('Erro no dult push: ')
       print(e)
       pedir_pull_request <- FALSE
     }
-  })
+  )
   
   ## Gerar o pull request.
   if(pedir_pull_request)
@@ -202,8 +224,6 @@ add_commit_push <- function(commit_message, pedir_pull_request = FALSE) {
 conecta_mariadb <- function() {
   if(!exists('dbd', envir = .GlobalEnv)) {
     console('Conectando via SQL.')
-    library(RMariaDB)
-    library(DBI)
     .GlobalEnv$dbd <- dbConnect(RMariaDB::MariaDB(), host = "localhost", user = "root")
   }
   .GlobalEnv$dbd
@@ -256,7 +276,7 @@ abre_dolt_sql <- function(verbose = FALSE) {
 
 # Variáveis (Zelador) ---------------------------------------------------------------------------------------------
 # Estas variáveis são de uso do Zelador.
-no_versão_zelador <- '10-24'
+no_versão_zelador <- '10-27'
 dir_linhas <- './linhas'
 dir_linhas_sobe <- paste0(dir_linhas, '/upload')
 limite_distribuição <- 5
@@ -329,14 +349,14 @@ usa_repositório <- function(repo) {
   
   cria_remote <- function(nome, endereço) {
     console('Criando remote ', nome, ' -> ', endereço, '.')
-    dbExecute(dbd, paste0("call dolt_remote('add', '", nome, "', '", endereço, "');"))
+    dolt('remote', 'add', nome, endereço, repo = proj_repo)
   }
   
   if(! remote_central %in% dolt_remotes)
     cria_remote(remote_central, endereço_central)
   
-  if(! remote_usuario %in% dolt_remotes)
-    cria_remote(remote_usuario, endereço_usurio)
+  if(! remote_usuário %in% dolt_remotes)
+    cria_remote(remote_usuário, endereço_usuário)
   
   ## Atualiza a tabela local.
   console('Baixando atualizações de ', endereço_central, '.')
@@ -590,7 +610,8 @@ sobe_linhas <- function() {
   tabela_dolt <- tbl(dbd, paste0(nome_tabela, '_dolt')) # tabela lazy
   
   códigos_reservados <- tabela_dolt |>
-    filter(statusSetBy == username && sourceCode %in% local(linhas_sobe$sourceCode)) |>
+    filter(statusSetBy == username)
+    filter(sourceCode %in% local(linhas_sobe$sourceCode)) |>
     select(sourceCode) |>
     collect()
   
