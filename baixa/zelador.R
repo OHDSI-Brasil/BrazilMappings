@@ -610,8 +610,7 @@ sobe_linhas <- function() {
   tabela_dolt <- tbl(dbd, paste0(nome_tabela, '_dolt')) # tabela lazy
   
   códigos_reservados <- tabela_dolt |>
-    filter(statusSetBy == username)
-    filter(sourceCode %in% local(linhas_sobe$sourceCode)) |>
+    filter(statusSetBy == username && sourceCode %in% local(linhas_sobe$sourceCode)) |>
     select(sourceCode) |>
     collect()
   
